@@ -58,6 +58,7 @@ void searchText(ifstream & haystack, const string & needle)
 int main(int argc, char * argv[])
 {
 
+	setlocale(LC_ALL, "Rus");
 	if (!checkInput(argc))
 	{
 		return 1;
