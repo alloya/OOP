@@ -4,7 +4,7 @@
 
 using namespace std;
 
-bool checkInput(int argc)
+bool CheckInput(int argc)
 {
 	if (argc != 3)
 	{
@@ -16,7 +16,7 @@ bool checkInput(int argc)
 	return true;
 }
 
-bool checkArguments(ifstream & input, const string & textToFind)
+bool CheckArguments(ifstream & input, const string & textToFind)
 {
 	if (!input.is_open())
 	{
@@ -33,7 +33,7 @@ bool checkArguments(ifstream & input, const string & textToFind)
 	return true;
 }
 
-void searchText(ifstream & haystack, const string & needle)
+void SearchText(ifstream & haystack, const string & needle)
 {
 	int lineNumber = 1;
 	bool isTextFound = false;
@@ -41,7 +41,7 @@ void searchText(ifstream & haystack, const string & needle)
 	while (getline(haystack, curLine))
 	{
 		size_t position = curLine.find(needle);
-		if (position != -1)
+		if (position != string::npos)
 		{
 			cout << lineNumber << endl;
 			isTextFound = true;
@@ -58,7 +58,7 @@ void searchText(ifstream & haystack, const string & needle)
 int main(int argc, char * argv[])
 {
 
-	if (!checkInput(argc))
+	if (!CheckInput(argc))
 	{
 		return 1;
 	}
@@ -66,9 +66,9 @@ int main(int argc, char * argv[])
 	ifstream input(argv[1]);
 	string textToFind = argv[2];
 
-	if (checkArguments(input, textToFind))
+	if (CheckArguments(input, textToFind))
 	{
-		searchText(input, textToFind);
+		SearchText(input, textToFind);
 	}
 
 	return 0;
