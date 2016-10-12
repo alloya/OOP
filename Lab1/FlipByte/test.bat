@@ -11,7 +11,7 @@ echo ----------
 
 %PROGRAM% > %TEMP%\output.txt
 if ERRORLEVEL 1 goto err
-fc.exe %TEMP%\output.txt invallidArguments.txt
+fc.exe %TEMP%\output.txt invalidArguments.txt
 if ERRORLEVEL 1 goto err 
 
 echo ----------
