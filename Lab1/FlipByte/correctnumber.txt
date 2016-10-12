@@ -1,0 +1,2 @@
+Your value is 6
+Flipped value is 96
