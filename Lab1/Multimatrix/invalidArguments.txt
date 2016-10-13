@@ -1,2 +1,0 @@
-Invalid arguments count
-Usage: multimatrix.exe <first file> <second file>

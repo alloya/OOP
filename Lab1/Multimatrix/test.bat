@@ -10,9 +10,13 @@ if ERRORLEVEL 1 goto err
 
 %PROGRAM% > %TEMP%\output.txt
 if NOT ERRORLEVEL 1 goto err
+fc.exe %TEMP%\output.txt invalidnumberofarguments.txt
+if ERRORLEVEL 1 goto err 
 
-%PROGRAM% first.txt > %TEMP%\output.txt
+%PROGRAM% first.txt new.txt> %TEMP%\output.txt
 if NOT ERRORLEVEL 1 goto err
+fc.exe %TEMP%\output.txt wrongfile.txt
+if ERRORLEVEL 1 goto err 
 
 echo Program testing succeeded 
 exit 0 
