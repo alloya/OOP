@@ -68,11 +68,12 @@ Matrix MultiplyMatrix(Matrix firstMatrix, Matrix secondMatrix)
 
 void PrintMatrix(ostream & output, Matrix & matrix)
 {
+	output << fixed;
 	for (size_t m = 0; m < MATRIX_DIM; m++)
 	{
 		for (size_t n = 0; n < MATRIX_DIM; n++)
 		{
-			output << setprecision(4) << matrix[m][n] << '\t';
+			output << setprecision(3) << matrix[m][n] << '\t';
 		}
 		output << endl;
 	}
