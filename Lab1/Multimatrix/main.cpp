@@ -2,6 +2,7 @@
 #include <fstream>
 #include <array>
 #include <math.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -50,6 +51,18 @@ bool GetMatrix(ifstream & file, Matrix & matrix)
 Matrix MultiplyMatrix(Matrix firstMatrix, Matrix secondMatrix)
 {
 	Matrix newMatrix;
+	for (size_t i = 0; i < MATRIX_DIM; ++i)
+	{
+		for (size_t j = 0; j < MATRIX_DIM; ++j)
+		{
+			newMatrix[i][j] = 0;
+			for (size_t k = 0; k < MATRIX_DIM; ++k)
+			{
+				newMatrix[i][j] += firstMatrix[i][k] * secondMatrix[k][j];
+			}
+			
+		}
+	}
 	return newMatrix;
 }
 
@@ -59,7 +72,7 @@ void PrintMatrix(ostream & output, Matrix & matrix)
 	{
 		for (size_t n = 0; n < MATRIX_DIM; n++)
 		{
-			output << matrix[m][n] << '\t';
+			output << setprecision(4) << matrix[m][n] << '\t';
 		}
 		output << endl;
 	}
@@ -84,8 +97,7 @@ int main(int argc, char * argv[])
 	GetMatrix(firstFile, firstMatrix);
 	GetMatrix(secondFile, secondMatrix);
 
-	//multipliedMatrix = MultiplyMatrix(firstMatrix, secondMatrix);
-	PrintMatrix(cout, firstMatrix);
-	PrintMatrix(cout, secondMatrix);
+	multipliedMatrix = MultiplyMatrix(firstMatrix, secondMatrix);
+	PrintMatrix(cout, multipliedMatrix);
 	return 0;
 }
