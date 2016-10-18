@@ -12,7 +12,7 @@ bool AreArgumentsCorrect(int argc)
 	return true;
 }
 
-bool IsItNumber(string number)
+bool IsItNumber(const string &number)
 {
 	for (unsigned int i = 0; i < number.length(); i++)
 	{
@@ -24,16 +24,12 @@ bool IsItNumber(string number)
 	return true;
 }
 
-bool IsNumberCorrect(size_t inputNumber)
+bool IsNumberCorrect(const int &inputNumber)
 {
-	if ((inputNumber < 0) || (inputNumber) > 255)
-	{
-		return false;
-	}
-	return true;
+	return (!(inputNumber < 0 || inputNumber > 255));
 }
 
-size_t ReverseNumber(size_t number)
+uint8_t ReverseNumber(uint8_t number)
 {
 	number = (number & 0b11110000) >> 4 | (number & 0b00001111) << 4;
 	number = (number & 0b11001100) >> 2 | (number & 0b00110011) << 2;
@@ -50,13 +46,13 @@ int main(int argc, char * argv[])
 	}
 	else
 	{
-		size_t inputNumber = atoi(argv[1]);
+		unsigned int inputNumber = atoi(argv[1]);
 		if (IsItNumber(argv[1]))
 		{
 			if (IsNumberCorrect(inputNumber))
 			{
 				cout << "Your value is " << inputNumber << endl;
-				size_t flippedValue = (size_t)ReverseNumber(inputNumber);
+				int flippedValue = (int)ReverseNumber(inputNumber);
 				cout << "Flipped value is " << flippedValue << endl;
 			}
 			else
