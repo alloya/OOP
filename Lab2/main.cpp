@@ -10,13 +10,6 @@ using namespace std;
 
 vector<double> GetVector(ifstream &input)
 {
-	/*double temp;
-	while (!file.eof())
-	{
-		file >> temp;
-		destVector.push_back(temp);
-	}
-	return destVector;*/
 	return {istream_iterator<double>(input), istream_iterator<double>() };
 }
 
