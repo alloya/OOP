@@ -17,6 +17,7 @@ vector<double> GetVector(ifstream &input)
 		destVector.push_back(temp);
 	}
 	return destVector;*/
+	return {istream_iterator<double>(input), istream_iterator<double>() };
 }
 
 void PrintSortedVector(vector<double> &inputVector)
