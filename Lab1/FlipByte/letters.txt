@@ -1,0 +1,1 @@
+Input value should contain only digits
