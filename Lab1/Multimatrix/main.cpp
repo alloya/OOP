@@ -33,15 +33,14 @@ bool CheckArguments(ifstream & firstFile, ifstream & secondFile)
 
 bool GetMatrix(ifstream & file, Matrix & matrix)
 {
-	for (size_t n, m = 0; m < MATRIX_DIM; m++)
+	for (size_t row, col = 0; col < MATRIX_DIM; col++)
 	{
-		for (n = 0; n < MATRIX_DIM; n++)
+		for (row = 0; row < MATRIX_DIM; row++)
 		{
-			if (file.eof())
+			if (!(file >> matrix[col][row]))
 			{
 				return false;
 			}
-			file >> matrix[m][n];
 		}
 	}
 	return true;
@@ -68,11 +67,12 @@ Matrix MultiplyMatrix(Matrix firstMatrix, Matrix secondMatrix)
 
 void PrintMatrix(ostream & output, Matrix & matrix)
 {
-	for (size_t m = 0; m < MATRIX_DIM; m++)
+	output << fixed;
+	for (size_t col = 0; col < MATRIX_DIM; col++)
 	{
-		for (size_t n = 0; n < MATRIX_DIM; n++)
+		for (size_t row = 0; row < MATRIX_DIM; row++)
 		{
-			output << setprecision(4) << matrix[m][n] << '\t';
+			output << setprecision(3) << matrix[col][row] << '\t';
 		}
 		output << endl;
 	}
