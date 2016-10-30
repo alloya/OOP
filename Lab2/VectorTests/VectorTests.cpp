@@ -1,12 +1,12 @@
 #include "stdafx.h"
 
-#include "../vector/utils.cpp"
+#include "../vector/utils.h"
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
 BOOST_AUTO_TEST_SUITE(Test)
 
-BOOST_AUTO_TEST_CASE(Getting_numbers)
+BOOST_AUTO_TEST_CASE(Getting_numbers_to_vector)
 {
 	{
 		std::stringstream str("2.5 4 3 -4.5 18.37 22");
@@ -25,31 +25,7 @@ BOOST_AUTO_TEST_CASE(Getting_numbers)
 	}
 }
 
-//BOOST_AUTO_TEST_CASE(Printing_vector)
-//{
-//	{
-//		std::stringstream buffer;
-//		std::vector<double> numbers = {
-//			2.5, 3.14, 7, 8, -19, 15
-//		};
-//		PrintVector(buffer, numbers);
-//		std::string str;
-//		std::getline(buffer, str);
-//		BOOST_CHECK(str == "2.500 3.140 7.000 8.000 -19.000 15.000 ");
-//	}
-//
-//	{
-//		std::stringstream buffer;
-//		std::vector<double> numbers = {
-//		};
-//		PrintVector(buffer, numbers);
-//		std::string str;
-//		std::getline(buffer, str);
-//		BOOST_CHECK(str == "");
-//	}
-//}
-
-BOOST_AUTO_TEST_CASE(Vector_processing)
+BOOST_AUTO_TEST_CASE(Vector_processing_when_minimal_is_positive)
 {
 	{
 		std::vector<double> numbers = {
@@ -61,6 +37,10 @@ BOOST_AUTO_TEST_CASE(Vector_processing)
 		};
 		BOOST_CHECK(numbers == correctVec);
 	}
+}
+
+BOOST_AUTO_TEST_CASE(Vector_processing_when_minimal_is_negative)
+{
 
 	{
 		std::vector<double> numbers = {
@@ -68,10 +48,14 @@ BOOST_AUTO_TEST_CASE(Vector_processing)
 		};
 		ModifyVector(numbers);
 		const std::vector<double> correctVec = {
-			-20.000, - 12.000, 4.000, - 200.000, -52.000
+			-20.000, -12.000, 4.000, -200.000, -52.000
 		};
 		BOOST_CHECK(numbers == correctVec);
 	}
+}
+
+BOOST_AUTO_TEST_CASE(Vector_processing_when_minimal_is_zero)
+{
 	{
 		std::vector<double> numbers = {
 			10, 6, 0, 100, 26
@@ -83,6 +67,9 @@ BOOST_AUTO_TEST_CASE(Vector_processing)
 		BOOST_CHECK(numbers == correctVec);
 	}
 
+}
+BOOST_AUTO_TEST_CASE(Vector_processing_when_vector_is_empty)
+{
 	{
 		std::vector<double> numbers = {
 		};
