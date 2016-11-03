@@ -47,7 +47,7 @@ bool GetMatrix(ifstream & file, Matrix & matrix)
 }
 
 
-Matrix MultiplyMatrix(Matrix & firstMatrix, Matrix & secondMatrix)
+Matrix MultiplyMatrix(Matrix const firstMatrix, Matrix const secondMatrix)
 {
 	Matrix newMatrix;
 	for (size_t i = 0; i < MATRIX_DIM; ++i)
