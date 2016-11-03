@@ -20,20 +20,6 @@ BOOST_AUTO_TEST_CASE(Multiplies_vector_elements_on_minimal)
 	}
 }
 
-BOOST_AUTO_TEST_CASE(Vector_processing_when_minimal_is_zero)
-{
-	{
-		std::vector<double> numbers = {
-			10, 6, 0, 100, 26
-		};
-		ModifyVector(numbers);
-		const std::vector<double> correctVec = {
-			0, 0, 0, 0, 0
-		};
-		BOOST_CHECK(numbers == correctVec);
-	}
-
-}
 BOOST_AUTO_TEST_CASE(Not_changing_empty_vector)
 {
 	{
