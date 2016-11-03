@@ -4,7 +4,7 @@
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
-BOOST_AUTO_TEST_SUITE(Test)
+BOOST_AUTO_TEST_SUITE(Function_FindAndReplace)
 
 BOOST_AUTO_TEST_CASE(Replace_Word_In_String)
 {

@@ -26,8 +26,8 @@ string FindAndReplace(string const & subject, string const & search, string  con
 {
 	string newString = "";
 
-	int leftPosition = 0;
-	int rightPosition = 0;
+	size_t leftPosition = 0;
+	size_t rightPosition = 0;
 
 	while (rightPosition != string::npos)
 	{
