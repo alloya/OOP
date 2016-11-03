@@ -47,7 +47,7 @@ bool GetMatrix(ifstream & file, Matrix & matrix)
 }
 
 
-Matrix MultiplyMatrix(Matrix const firstMatrix, Matrix const secondMatrix)
+Matrix MultiplyMatrix(const Matrix & firstMatrix, const Matrix & secondMatrix)
 {
 	Matrix newMatrix;
 	for (size_t i = 0; i < MATRIX_DIM; ++i)
@@ -65,7 +65,7 @@ Matrix MultiplyMatrix(Matrix const firstMatrix, Matrix const secondMatrix)
 	return newMatrix;
 }
 
-void PrintMatrix(ostream & output, Matrix & matrix)
+void PrintMatrix(ostream & output, const Matrix & matrix)
 {
 	output << fixed;
 	for (size_t col = 0; col < MATRIX_DIM; col++)
