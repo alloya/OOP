@@ -6,7 +6,7 @@
 
 BOOST_AUTO_TEST_SUITE(Function_FindAndReplace)
 
-BOOST_AUTO_TEST_CASE(Replace_Word_In_String)
+BOOST_AUTO_TEST_CASE(Replaces_word_in_string)
 {
 	{
 		string subject = "A bad beginning makes a bad ending.";
@@ -17,32 +17,20 @@ BOOST_AUTO_TEST_CASE(Replace_Word_In_String)
 
 }
 
-BOOST_AUTO_TEST_CASE(Replace_Unexisting_Word_In_String)
+BOOST_AUTO_TEST_CASE(Not_changing_input_string_if_searching_string_is_empty)
 {
 	{
-		string subject = "A bad beginning makes a bad ending.";
-		auto newString = FindAndReplace(subject, "happy", "wonderful");
-		BOOST_CHECK(newString == subject);
+		BOOST_CHECK_EQUAL(FindAndReplace("subj", "", "hello"), "subj");
 	}
 
 }
 
-BOOST_AUTO_TEST_CASE(Replace_Single_Character_In_String)
+BOOST_AUTO_TEST_CASE(Not_changing_already_changed_text)
 {
 	{
-		string subject = "Hotel";
-		auto newString = FindAndReplace(subject, "H", "M");
-		const string correctString = "Motel";
-		BOOST_CHECK(newString == correctString);
-	}
-}
-
-BOOST_AUTO_TEST_CASE(Replace_Several_Digits_In_String)
-{
-	{
-		string subject = "111222333444";
-		auto newString = FindAndReplace(subject, "111", "000");
-		const string correctString = "000222333444";
+		string subject = "ma mamos";
+		auto newString = FindAndReplace(subject, "ma", "mama");
+		const string correctString = "mama mamamos";
 		BOOST_CHECK(newString == correctString);
 	}
 }

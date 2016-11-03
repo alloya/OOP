@@ -29,18 +29,26 @@ string FindAndReplace(string const & subject, string const & search, string  con
 	size_t leftPosition = 0;
 	size_t rightPosition = 0;
 
-	while (rightPosition != string::npos)
+	if (!search.length() == 0)
 	{
-		rightPosition = subject.find(search, leftPosition);
-		if (rightPosition != string::npos)
+		while (rightPosition != string::npos)
 		{
-			newString += subject.substr(leftPosition, rightPosition - leftPosition);
-			newString += replace;
-			leftPosition = rightPosition + search.length();
+			rightPosition = subject.find(search, leftPosition);
+			if (rightPosition != string::npos)
+			{
+				newString += subject.substr(leftPosition, rightPosition - leftPosition);
+				newString += replace;
+				leftPosition = rightPosition + search.length();
+			}
 		}
+
+		newString += subject.substr(leftPosition, subject.length());
+
+		return newString;
 	}
-
-	newString += subject.substr(leftPosition, subject.length());
-
-	return newString;
+	else
+	{
+		return subject;
+	}
+	
 }
