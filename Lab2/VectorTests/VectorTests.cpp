@@ -4,28 +4,9 @@
 #include <boost/test/output/compiler_log_formatter.hpp>
 #include <boost/algorithm/string/replace.hpp>
 
-BOOST_AUTO_TEST_SUITE(Test)
+BOOST_AUTO_TEST_SUITE(Function_Modify_Vector)
 
-BOOST_AUTO_TEST_CASE(Getting_numbers_to_vector)
-{
-	{
-		std::stringstream str("2.5 4 3 -4.5 18.37 22");
-		auto numbers = GetNumbers(str);
-		const std::vector<double> correctVec = {
-			2.5, 4, 3, -4.5, 18.37, 22
-		};
-		BOOST_CHECK(numbers == correctVec);
-	}
-
-	{
-		std::stringstream str("");
-		auto numbers = GetNumbers(str);
-		const std::vector<double> correctVec = {};
-		BOOST_CHECK(numbers == correctVec);
-	}
-}
-
-BOOST_AUTO_TEST_CASE(Vector_processing_when_minimal_is_positive)
+BOOST_AUTO_TEST_CASE(Multiplies_vector_elements_on_minimal)
 {
 	{
 		std::vector<double> numbers = {
@@ -34,21 +15,6 @@ BOOST_AUTO_TEST_CASE(Vector_processing_when_minimal_is_positive)
 		ModifyVector(numbers);
 		const std::vector<double> correctVec = {
 			20, 12, 4, 200, 52
-		};
-		BOOST_CHECK(numbers == correctVec);
-	}
-}
-
-BOOST_AUTO_TEST_CASE(Vector_processing_when_minimal_is_negative)
-{
-
-	{
-		std::vector<double> numbers = {
-			10, 6, -2, 100, 26
-		};
-		ModifyVector(numbers);
-		const std::vector<double> correctVec = {
-			-20.000, -12.000, 4.000, -200.000, -52.000
 		};
 		BOOST_CHECK(numbers == correctVec);
 	}
@@ -68,7 +34,7 @@ BOOST_AUTO_TEST_CASE(Vector_processing_when_minimal_is_zero)
 	}
 
 }
-BOOST_AUTO_TEST_CASE(Vector_processing_when_vector_is_empty)
+BOOST_AUTO_TEST_CASE(Not_changing_empty_vector)
 {
 	{
 		std::vector<double> numbers = {
