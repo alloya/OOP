@@ -20,9 +20,14 @@ void CTvSet::TurnOff()
 	m_isOn = false;
 }
 
+bool IsNumberCorect(int number)
+{
+	return ((number < 100) && (number > 0));
+}
+
 bool CTvSet::SelectChannel(int channel)
 {
-	if ((m_isOn) && (channel <100) && (channel > 0))
+	if ((m_isOn) && IsNumberCorect(channel))
 	{
 		m_prevChannel = m_currChannel;
 		m_currChannel = channel;
@@ -36,6 +41,16 @@ bool CTvSet::SelectPreviousChannel()
 	if (m_isOn)
 	{
 		std::swap(m_currChannel, m_prevChannel);
+		return true;
+	}
+	return false;
+}
+
+bool CTvSet::SetChannelName(int number, std::string name)
+{
+	if (m_isOn && IsNumberCorect(number))
+	{
+		m_name = name;
 		return true;
 	}
 	return false;

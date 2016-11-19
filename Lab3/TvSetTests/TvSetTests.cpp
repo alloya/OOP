@@ -13,6 +13,11 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 		BOOST_CHECK(!tv.IsTurnedOn());
 	}
 
+	BOOST_AUTO_TEST_CASE(cant_set_channel_name_when_tv_is_off)
+	{
+		BOOST_CHECK(!tv.SetChannelName(1, "OPT"));
+	}
+
 	BOOST_AUTO_TEST_CASE(channel_number_when_tv_is_off_is_0)
 	{
 		BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 0);
