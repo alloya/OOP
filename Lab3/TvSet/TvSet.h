@@ -6,6 +6,7 @@ public:
 	bool IsTurnedOn()const;
 	void TurnOn();
 	void TurnOff();
+	std::string GetName()const;
 	bool SelectChannel(int channel);
 	bool SelectPreviousChannel();
 	bool SetChannelName(int channelNumber, std::string channelName);

@@ -20,9 +20,26 @@ void CTvSet::TurnOff()
 	m_isOn = false;
 }
 
-bool IsNumberCorect(int number)
+std::string CTvSet::GetName()const
+{
+	return m_name;
+}
+
+bool IsNumberCorect(int const number)
 {
 	return ((number < 100) && (number > 0));
+}
+
+bool IsNameCorrect(std::string & name)
+{
+	//return (name.empty());
+	
+	if (!name.empty())
+	{
+		name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
+		return true;
+	}
+	return false;
 }
 
 bool CTvSet::SelectChannel(int channel)
@@ -48,9 +65,10 @@ bool CTvSet::SelectPreviousChannel()
 
 bool CTvSet::SetChannelName(int number, std::string name)
 {
-	if (m_isOn && IsNumberCorect(number))
+	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
 		m_name = name;
+//		m_name = std::regex_replace(m_name, std::regex("^ +| +$|( ) +"), "$1");
 		return true;
 	}
 	return false;

@@ -20,5 +20,7 @@
 #include <sstream>
 #include <functional>
 #include <map>
+#include <string>
+#include <regex>
 
 // TODO: reference additional headers your program requires here
