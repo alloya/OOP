@@ -35,9 +35,7 @@ bool CTvSet::SelectPreviousChannel()
 {
 	if (m_isOn)
 	{
-		int tmp = m_currChannel;
-		m_currChannel = m_prevChannel;
-		m_prevChannel = tmp;
+		std::swap(m_currChannel, m_prevChannel);
 		return true;
 	}
 	return false;

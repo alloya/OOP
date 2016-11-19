@@ -10,9 +10,6 @@ CRemoteControl::CRemoteControl(CTvSet & tv, std::istream & input, std::ostream &
 	, m_input(input)
 	, m_output(output)
 	, m_actionMap({
-		/*{ "TurnOn", [this](istream & strm) {
-			return TurnOn(strm);
-		} },*/
 		{ "TurnOn", bind(&CRemoteControl::TurnOn, this, _1) } ,
 		{ "TurnOff", bind(&CRemoteControl::TurnOff, this, _1) },
 		{ "Info", bind(&CRemoteControl::Info, this, _1) },

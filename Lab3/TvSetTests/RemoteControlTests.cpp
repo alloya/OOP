@@ -49,13 +49,6 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		VerifyCommandHandling("TurnOn", 1, "TV is turned on.\n");
 	}
 
-	BOOST_AUTO_TEST_CASE(can_turn_off_tv_which_is_on)
-	{
-		tv.TurnOn();
-		VerifyCommandHandling("TurnOff", none, "TV is turned off.\n");
-	}
-
-
 	BOOST_AUTO_TEST_CASE(can_print_tv_info)
 	{
 		// Ожидаемое поведение команды Info, вызванной у выключенного телевизора
@@ -67,43 +60,49 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		VerifyCommandHandling("Info", 42, "TV is turned on.\nChannel is: 42\n");
 	}
 
-	BOOST_AUTO_TEST_CASE(can_select_a_valid_channel_when_tv_which_is_on)
-	{
-		tv.TurnOn();
-		VerifyCommandHandling("SelectChannel 42", 42, "Channel switched to 42.\n");
-	}
-	
-
 	BOOST_AUTO_TEST_CASE(cant_select_channel_when_tv_is_turned_off)
 	{
 		VerifyCommandHandling("SelectChannel 42", none, "Can't select channel because TV is turned off.\n");
 		VerifyCommandHandling("SelectChannel 100", none, "Can't select channel because TV is turned off.\n");
 	}
 
-	BOOST_AUTO_TEST_CASE(cant_select_an_invalid_channel_when_tv_is_on)
+	struct when_turned_on_ : RemoteControlFixture
 	{
-		tv.TurnOn();
-		tv.SelectChannel(42);
-		VerifyCommandHandling("SelectChannel 100", 42, "Incorrect channel. Enter number from 1 to 99.\n");
-		VerifyCommandHandling("SelectChannel 0", 42, "Incorrect channel. Enter number from 1 to 99.\n");
-	}
+		when_turned_on_()
+		{
+			tv.TurnOn();
+		}
+	};
+	BOOST_FIXTURE_TEST_SUITE(when_turned_on, when_turned_on_)
 
-	BOOST_AUTO_TEST_CASE(remembers_previous_channel)
-	{
-		tv.TurnOn();
-		tv.SelectChannel(42);
-		VerifyCommandHandling("SelectPreviousChannel", 1, "Channel switched to 1.\n");
-		VerifyCommandHandling("SelectPreviousChannel", 42, "Channel switched to 42.\n");
-	}
+		BOOST_AUTO_TEST_CASE(cant_select_previous_channel_right_after)
+		{
+			VerifyCommandHandling("SelectPreviousChannel", 1, "Channel switched to 1.\n");
+		}
+		
+		BOOST_AUTO_TEST_CASE(can_be_turned_off)
+		{
+			VerifyCommandHandling("TurnOff", none, "TV is turned off.\n");
+		}
+
+		BOOST_AUTO_TEST_CASE(can_select_a_valid_channel)
+		{
+			VerifyCommandHandling("SelectChannel 42", 42, "Channel switched to 42.\n");
+		}
 	
+		BOOST_AUTO_TEST_CASE(cant_select_an_invalid_channel)
+		{
+			tv.SelectChannel(42);
+			VerifyCommandHandling("SelectChannel 100", 42, "Incorrect channel. Enter number from 1 to 99.\n");
+			VerifyCommandHandling("SelectChannel 0", 42, "Incorrect channel. Enter number from 1 to 99.\n");
+		}
 
-	// Напишите тесты для недостающего функционала класса CRemoteControl (если нужно)
-	//	и для дополнительных заданий на бонусные баллы (если нужно)
-	// После написания каждого теста убедитесь, что он не проходит.
-	// Доработайте простейшим образом класс CRemoteControl, чтобы этот тест и предыдущие проходили
-	// При необходимости выполните рефакторинг кода, сохраняя работоспособность тестов
-	// При необходимости используйте вложенные тесты (как использующие fixture, так и нет)
-	// Имена тестам и test suite-ам давайте такие, чтобы выводимая в output иерархия
-	//	тестов читалась как спецификация на английском языке, описывающая поведение remote control-а
+		BOOST_AUTO_TEST_CASE(remembers_previous_channel)
+		{
+			tv.SelectChannel(42);
+			VerifyCommandHandling("SelectPreviousChannel", 1, "Channel switched to 1.\n");
+			VerifyCommandHandling("SelectPreviousChannel", 42, "Channel switched to 42.\n");
+		}
+	}
 
 BOOST_AUTO_TEST_SUITE_END()
