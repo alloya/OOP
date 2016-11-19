@@ -32,11 +32,9 @@ bool IsNumberCorect(int const number)
 
 bool IsNameCorrect(std::string & name)
 {
-	//return (name.empty());
-	
+	name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
 	if (!name.empty())
 	{
-		name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
 		return true;
 	}
 	return false;
@@ -68,7 +66,6 @@ bool CTvSet::SetChannelName(int number, std::string name)
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
 		m_name = name;
-//		m_name = std::regex_replace(m_name, std::regex("^ +| +$|( ) +"), "$1");
 		return true;
 	}
 	return false;
