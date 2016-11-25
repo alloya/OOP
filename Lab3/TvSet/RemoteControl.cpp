@@ -14,8 +14,7 @@ CRemoteControl::CRemoteControl(CTvSet & tv, std::istream & input, std::ostream &
 		{ "TurnOff", bind(&CRemoteControl::TurnOff, this, _1) },
 		{ "Info", bind(&CRemoteControl::Info, this, _1) },
 		{ "SelectChannel", bind(&CRemoteControl::SelectChannel, this, _1) },
-		{ "SelectPreviousChannel", bind(&CRemoteControl::SelectPreviousChannel, this, _1) },
-		{ "SetChannelName", bind(&CRemoteControl::SetChannelName, this, _1) }
+		{ "SelectPreviousChannel", bind(&CRemoteControl::SelectPreviousChannel, this, _1) }
 	})
 {
 }
@@ -54,7 +53,7 @@ bool CRemoteControl::TurnOff(std::istream & /*args*/)
 bool CRemoteControl::Info(std::istream & /*args*/)
 {
 	string info = (m_tv.IsTurnedOn())
-		? ("TV is turned on.\nChannel is: " + to_string(m_tv.GetCurrChannel()) + " " + (m_tv.GetName()) + "\n")
+		? ("TV is turned on.\nChannel is: " + to_string(m_tv.GetCurrChannel()) + "\n")
 		: "TV is turned off.\n";
 
 	m_output << info;
@@ -88,29 +87,6 @@ bool CRemoteControl::SelectPreviousChannel(std::istream & args)
 	string info = (m_tv.SelectPreviousChannel()) ? ("Channel switched to " + to_string(m_tv.GetCurrChannel()) + ".\n")
 		: "Can't select channel because TV is turned off.\n";
 	
-	m_output << info;
-
-	return true;
-}
-
-bool CRemoteControl::SetChannelName(std::istream & args)
-{
-	int channel;
-	string info;
-	string name;
-	args >> channel;
-	args >> name;
-
-	if (m_tv.IsTurnedOn())
-	{
-		info = (m_tv.SetChannelName(channel, name)) ? ("Channel name is set to " + (m_tv.GetName()) + ".\n")
-			: "Channel number must be from 1 to 99. Name must not be empty or contain only whitespaces.\n";
-	}
-	else
-	{
-		info = "Can't set channel name because TV is turned off.\n";
-	}
-
 	m_output << info;
 
 	return true;
