@@ -80,7 +80,8 @@ void CTvSet::Info()
 {
 	if (m_isOn)
 	{
-		std::cout << "TV is ON. Current channel is " << m_currChannel << std::endl;
+		std::cout << "TV is ON. Current channel is " << m_currChannel << 
+			" - " << m_name << std::endl;
 	}
 	else
 	{

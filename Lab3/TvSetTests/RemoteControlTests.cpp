@@ -57,13 +57,19 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		// Проверяем поведение команды Info у включенного телевизора
 		tv.TurnOn();
 		tv.SelectChannel(42);
-		VerifyCommandHandling("Info", 42, "TV is turned on.\nChannel is: 42\n");
+		tv.SetChannelName(42, "Netflix");
+		VerifyCommandHandling("Info", 42, "TV is turned on.\nChannel is: 42 Netflix\n");
 	}
 
 	BOOST_AUTO_TEST_CASE(cant_select_channel_when_tv_is_turned_off)
 	{
 		VerifyCommandHandling("SelectChannel 42", none, "Can't select channel because TV is turned off.\n");
 		VerifyCommandHandling("SelectChannel 100", none, "Can't select channel because TV is turned off.\n");
+	}
+
+	BOOST_AUTO_TEST_CASE(cant_set_channel_name_when_tv_is_turned_off)
+	{
+		VerifyCommandHandling("SetChannelName 42, ORT ", none, "Can't set channel name because TV is turned off.\n");
 	}
 
 	struct when_turned_on_ : RemoteControlFixture
@@ -73,6 +79,7 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			tv.TurnOn();
 		}
 	};
+
 	BOOST_FIXTURE_TEST_SUITE(when_turned_on, when_turned_on_)
 
 		BOOST_AUTO_TEST_CASE(cant_select_previous_channel_right_after)
@@ -102,6 +109,12 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			tv.SelectChannel(42);
 			VerifyCommandHandling("SelectPreviousChannel", 1, "Channel switched to 1.\n");
 			VerifyCommandHandling("SelectPreviousChannel", 42, "Channel switched to 42.\n");
+		}
+
+		BOOST_AUTO_TEST_CASE(can_set_channel_name)
+		{
+			VerifyCommandHandling("SetChannelName 42 Netflix", 1, "Channel name is set to Netflix.\n");
+			VerifyCommandHandling("SetChannelName 100 Netflix", 1, "Channel number must be from 1 to 99. Name must not be empty or contain only whitespaces.\n");
 		}
 	}
 
