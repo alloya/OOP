@@ -121,22 +121,6 @@ int CTvSet::GetCurrChannel() const
 	return m_isOn ? m_currChannel : 0;
 }
 
-
-//void CTvSet::Info()
-//{
-	//if (m_isOn)
-	//{
-	//	//std::cout << "TV is ON. Current channel is " << m_currChannel << 
-	//	//	" - " << m_name << std::endl;
-	//	std::cout << ("TV is turned on.\nChannel is: " + std::to_string(m_currChannel)
-	//		+ " " + (GetChannelName(m_currChannel) + "\n"));
-	//}
-	//else
-	//{
-	//	std::cout << "TV is turned off." << std::endl;
-	//}
-//}
-
 string CTvSet::GetChannelByName(string name) const
 {
 	return (channelName.find(name) != channelName.end()
@@ -146,7 +130,7 @@ string CTvSet::GetChannelByName(string name) const
 bool CTvSet::DeleteChannelName(string name)
 {
 	map<string, size_t>::iterator itName = channelName.find(name);
-	if (itName != channelName.end())
+	if (m_isOn && itName != channelName.end())
 	{
 		int number = itName->second;
 		channelName.erase(itName);

@@ -112,11 +112,7 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			VerifyCommandHandling("SelectChannel 42", 42, "Channel switched to 42.\n");
 		}
 
-		BOOST_AUTO_TEST_CASE(can_select_a_valid_channel_by_name)
-		{
-			tv.SetChannelName(42, "PTP");
-			VerifyCommandHandling("SelectChannel PTP", 42, "Channel switched to 42 PTP.\n");
-		}
+		
 	
 		BOOST_AUTO_TEST_CASE(cant_select_an_invalid_channel)
 		{
@@ -143,25 +139,50 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			VerifyCommandHandling("SetChannelName 100 Netflix", 1, "Channel number must be from 1 to 99. Name must not be empty or contain only whitespaces.\n");
 		}
 
-		BOOST_AUTO_TEST_CASE(can_get_channel_name)
+		struct when_channel_name_is_set_ : RemoteControlFixture
 		{
-			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 \n");
-			tv.SetChannelName(1, "OPT");
-			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 OPT\n");
-		}
+			when_channel_name_is_set_()
+			{
+				tv.TurnOn();
+				tv.SetChannelName(2, "OPT");
+			}
+		};
+		BOOST_FIXTURE_TEST_SUITE(when_channel_name_is_set, when_channel_name_is_set_)
 
-		BOOST_AUTO_TEST_CASE(can_get_channel_by_name)
-		{
-			VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is not exist.\n");
-			tv.SetChannelName(1, "OPT");
-			VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is 1.\n");
-		}
+			BOOST_AUTO_TEST_CASE(can_get_channel_name)
+			{
+				VerifyCommandHandling("GetChannelName 2", 1, "Channel 2 OPT\n");
+			}
 
-		BOOST_AUTO_TEST_CASE(can_delete_channel_name)
-		{
-			VerifyCommandHandling("DeleteChannelName OPT", 1, "Channel name OPT not exists.\n");
-			tv.SetChannelName(1, "OPT");
-			VerifyCommandHandling("DeleteChannelName OPT", 1, "Channel name OPT is deleted.\n");
+			BOOST_AUTO_TEST_CASE(can_select_channel_by_valid_name)
+			{
+				VerifyCommandHandling("SelectChannel OPT", 2, "Channel switched to 2 OPT.\n");
+			}
+
+			BOOST_AUTO_TEST_CASE(cant_select_channel_by_invalid_name)
+			{
+				VerifyCommandHandling("SelectChannel PTP", 1, "Channel with this name doesn't exist.\n");
+			}
+
+			BOOST_AUTO_TEST_CASE(can_get_channel_by_name)
+			{
+				VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is 2.\n");
+			}
+
+			BOOST_AUTO_TEST_CASE(can_delete_channel_name)
+			{
+				VerifyCommandHandling("DeleteChannelName OPT", 1, "Channel name OPT is deleted.\n");
+			}
+
+			BOOST_AUTO_TEST_CASE(can_rename_channel)
+			{
+				VerifyCommandHandling("SetChannelName 2 PTP", 1, "Channel 2 name is set to PTP.\n");
+			}
+
+			BOOST_AUTO_TEST_CASE(can_reassosiate_channel_name)
+			{
+				VerifyCommandHandling("SetChannelName 1 OPT", 1, "Channel 1 name is set to OPT.\n");
+			}
 		}
 	}
 

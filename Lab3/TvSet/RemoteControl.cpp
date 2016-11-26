@@ -89,7 +89,7 @@ bool CRemoteControl::SelectChannel(std::istream & args)
 	{
 		info = m_tv.SelectChannel(channel) ? ("Channel switched to " + to_string(m_tv.GetCurrChannel()) 
 			+ " " + m_tv.GetChannelName(m_tv.GetCurrChannel()) + ".\n")
-			: "Incorrect channel. Enter number from 1 to 99.\n";
+			: "Channel with this name doesn't exist.\n";
 	}
 	else
 	{
