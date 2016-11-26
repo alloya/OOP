@@ -48,12 +48,29 @@ bool IsNameCorrect(string & name)
 	return false;
 }
 
+//bool IsNameExist(string name)
+//{
+//	return (chan);
+//}
+
 bool CTvSet::SelectChannel(int channel)
 {
 	if ((m_isOn) && IsNumberCorect(channel))
 	{
 		m_prevChannel = m_currChannel;
 		m_currChannel = channel;
+		return true;
+	}
+	return false;
+}
+
+bool CTvSet::SelectChannel(string name)
+{
+	map<string, size_t>::iterator it = channelName.find(name);
+	if ((m_isOn) && (it != channelName.end()))
+	{
+		m_prevChannel = m_currChannel;
+		m_currChannel = it -> second;
 		return true;
 	}
 	return false;
@@ -73,8 +90,6 @@ bool CTvSet::SetChannelName(int number, string name)
 {
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
-		//m_name = name;
-		//mySecondMap.insert ( pair<char,int>(c,i) );
 		channelName.insert(pair<string, size_t>(name, number));
 		channelNumber.insert(pair<size_t, string>(number, name));
 		return true;
@@ -112,14 +127,11 @@ string CTvSet::GetChannelByName(string name) const
 bool CTvSet::DeleteChannelName(string name)
 {
 	map<string, size_t>::iterator itName = channelName.find(name);
-	map<size_t, string>::iterator itNumber;
-	//itNumber = channelName.find(name);
 	if (itName != channelName.end())
 	{
 		int number = itName->second;
 		channelName.erase(itName);
-		//itNumber = channelNumber.find(number);
-		channelNumber.erase(channelNumber.find(number));
+		channelNumber.erase(number);
 		return true;
 	}
 	

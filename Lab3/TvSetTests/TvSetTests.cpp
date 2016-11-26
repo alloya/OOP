@@ -36,6 +36,12 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 		BOOST_CHECK(!tv.SelectPreviousChannel());
 	}
 
+	BOOST_AUTO_TEST_CASE(cant_select_channel_number_by_name_if_turned_off)
+	{
+		BOOST_CHECK(!tv.IsTurnedOn());
+		BOOST_CHECK(!tv.SelectChannel("OPT"));
+	}
+
 	BOOST_AUTO_TEST_CASE(can_be_turned_on)
 	{
 		tv.TurnOn();
@@ -75,6 +81,14 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 1);
 			tv.SelectChannel(-1);
 			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 1);
+		}
+
+		BOOST_AUTO_TEST_CASE(channel_can_be_selected_by_name)
+		{
+			tv.SetChannelName(42, "OPT");
+			BOOST_CHECK(!tv.SelectChannel("OP3"));
+			BOOST_CHECK(tv.SelectChannel("OPT"));
+			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 42);
 		}
 		
 		BOOST_AUTO_TEST_CASE(remembers_previous_channels)
