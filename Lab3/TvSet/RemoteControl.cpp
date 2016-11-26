@@ -16,7 +16,8 @@ CRemoteControl::CRemoteControl(CTvSet & tv, std::istream & input, std::ostream &
 		{ "SelectChannel", bind(&CRemoteControl::SelectChannel, this, _1) },
 		{ "SelectPreviousChannel", bind(&CRemoteControl::SelectPreviousChannel, this, _1) },
 		{ "SetChannelName", bind(&CRemoteControl::SetChannelName, this, _1) },
-		{ "GetChannelName", bind(&CRemoteControl::GetChannelName, this, _1) }
+		{ "GetChannelName", bind(&CRemoteControl::GetChannelName, this, _1) },
+		{ "GetChannelByName", bind(&CRemoteControl::GetChannelByName, this, _1) }
 	})
 {
 }
@@ -132,6 +133,26 @@ bool CRemoteControl::GetChannelName(std::istream & args)
 	else
 	{
 		info = "Can't get channel name because TV is turned off.\n";
+	}
+
+	m_output << info;
+
+	return true;
+}
+
+bool CRemoteControl::GetChannelByName(std::istream & args)
+{
+	string name;
+	string info;
+	args >> name;
+
+	if (m_tv.IsTurnedOn())
+	{
+		info = ("Channel " + name + " is " + m_tv.GetChannelByName(name) + ".\n");
+	}
+	else
+	{
+		info = "Can't get channel number because TV is turned off.\n";
 	}
 
 	m_output << info;

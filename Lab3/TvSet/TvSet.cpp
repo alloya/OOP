@@ -104,6 +104,6 @@ int CTvSet::GetCurrChannel() const
 std::string CTvSet::GetChannelByName(std::string name) const
 {
 	return (channelName.find(name) != channelName.end()
-		? std::to_string(channelName.find(name)->second) : ("No such channel name."));
+		? std::to_string(channelName.find(name)->second) : ("not exist"));
 }
 

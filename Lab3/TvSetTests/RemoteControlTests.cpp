@@ -77,6 +77,11 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		VerifyCommandHandling("GetChannelName 42, ORT ", none, "Can't get channel name because TV is turned off.\n");
 	}
 
+	BOOST_AUTO_TEST_CASE(cant_get_channel_by_name_when_tv_is_turned_off)
+	{
+		VerifyCommandHandling("GetChannelByName OPT", none, "Can't get channel number because TV is turned off.\n");
+	}
+
 	struct when_turned_on_ : RemoteControlFixture
 	{
 		when_turned_on_()
@@ -132,6 +137,13 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 name is empty.\n");
 			tv.SetChannelName(1, "OPT");
 			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 name is OPT.\n");
+		}
+
+		BOOST_AUTO_TEST_CASE(can_get_channel_by_name)
+		{
+			VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is not exist.\n");
+			tv.SetChannelName(1, "OPT");
+			VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is 1.\n");
 		}
 
 		/*BOOST_AUTO_TEST_CASE(can_rename_channel)
