@@ -20,9 +20,16 @@ void CTvSet::TurnOff()
 	m_isOn = false;
 }
 
-std::string CTvSet::GetName()const
+std::string CTvSet::GetChannelName(int number)const
 {
-	return m_name;
+	/*if (channelNumber.find(GetCurrChannel()) != channelNumber.end())
+	{
+		return channelNumber.find(GetCurrChannel())->second;
+	}
+	return ("This channel name is empty.");
+	*/
+	return (channelNumber.find(number) != channelNumber.end()
+		? channelNumber.find(number)->second : ("empty"));
 }
 
 bool IsNumberCorect(int const number)
@@ -65,7 +72,10 @@ bool CTvSet::SetChannelName(int number, std::string name)
 {
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
-		m_name = name;
+		//m_name = name;
+		//mySecondMap.insert ( pair<char,int>(c,i) );
+		channelName.insert(std::pair<std::string, size_t>(name, number));
+		channelNumber.insert(std::pair<size_t, std::string>(number, name));
 		return true;
 	}
 	return false;
@@ -76,16 +86,24 @@ int CTvSet::GetCurrChannel() const
 	return m_isOn ? m_currChannel : 0;
 }
 
-void CTvSet::Info()
+//void CTvSet::Info()
+//{
+	//if (m_isOn)
+	//{
+	//	//std::cout << "TV is ON. Current channel is " << m_currChannel << 
+	//	//	" - " << m_name << std::endl;
+	//	std::cout << ("TV is turned on.\nChannel is: " + std::to_string(m_currChannel)
+	//		+ " " + (GetChannelName(m_currChannel) + "\n"));
+	//}
+	//else
+	//{
+	//	std::cout << "TV is turned off." << std::endl;
+	//}
+//}
+
+std::string CTvSet::GetChannelByName(std::string name) const
 {
-	if (m_isOn)
-	{
-		std::cout << "TV is ON. Current channel is " << m_currChannel << 
-			" - " << m_name << std::endl;
-	}
-	else
-	{
-		std::cout << "TV is OFF." << std::endl;
-	}
+	return (channelName.find(name) != channelName.end()
+		? std::to_string(channelName.find(name)->second) : ("No such channel name."));
 }
 

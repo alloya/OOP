@@ -72,6 +72,11 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		VerifyCommandHandling("SetChannelName 42, ORT ", none, "Can't set channel name because TV is turned off.\n");
 	}
 
+	BOOST_AUTO_TEST_CASE(cant_get_channel_name_when_tv_is_turned_off)
+	{
+		VerifyCommandHandling("GetChannelName 42, ORT ", none, "Can't get channel name because TV is turned off.\n");
+	}
+
 	struct when_turned_on_ : RemoteControlFixture
 	{
 		when_turned_on_()
@@ -111,11 +116,29 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			VerifyCommandHandling("SelectPreviousChannel", 42, "Channel switched to 42.\n");
 		}
 
+		BOOST_AUTO_TEST_CASE(doesnt_have_channel_name_by_default)
+		{
+			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 name is empty.\n");
+		}
+
 		BOOST_AUTO_TEST_CASE(can_set_channel_name)
 		{
-			VerifyCommandHandling("SetChannelName 42 Netflix", 1, "Channel name is set to Netflix.\n");
+			VerifyCommandHandling("SetChannelName 1 Netflix", 1, "Channel 1 name is set to Netflix.\n");
 			VerifyCommandHandling("SetChannelName 100 Netflix", 1, "Channel number must be from 1 to 99. Name must not be empty or contain only whitespaces.\n");
 		}
+
+		BOOST_AUTO_TEST_CASE(can_get_channel_name)
+		{
+			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 name is empty.\n");
+			tv.SetChannelName(1, "OPT");
+			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 name is OPT.\n");
+		}
+
+		/*BOOST_AUTO_TEST_CASE(can_rename_channel)
+		{
+			VerifyCommandHandling("SetChannelName 1 Netflix", 1, "Channel name is set to Netflix.\n");
+			VerifyCommandHandling("SetChannelName 100 Netflix", 1, "Channel number must be from 1 to 99. Name must not be empty or contain only whitespaces.\n");
+		}*/
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -63,7 +63,7 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 1);
 		}
 
-		BOOST_AUTO_TEST_CASE(can_change_channel_if_turned_on)
+		BOOST_AUTO_TEST_CASE(can_change_channel)
 		{
 			tv.SelectChannel(33);
 			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 33);
@@ -98,7 +98,21 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 		BOOST_AUTO_TEST_CASE(can_set_channel_name)
 		{
 			tv.SetChannelName(1, "   First   and only   ");
-			BOOST_CHECK_EQUAL(tv.GetName(), "First and only");
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "First and only");
+		}
+
+		BOOST_AUTO_TEST_CASE(can_get_channel_name)
+		{
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "empty");
+			tv.SetChannelName(1, "   First   and only   ");
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "First and only");
+		}
+
+		BOOST_AUTO_TEST_CASE(can_get_channel_number_ny_name)
+		{
+			BOOST_CHECK_EQUAL(tv.GetChannelByName("OPT"), "No such channel name.");
+			tv.SetChannelName(2, "OPT");
+			BOOST_CHECK_EQUAL(tv.GetChannelByName("OPT"), "2");
 		}
 
 		BOOST_AUTO_TEST_CASE(cant_set_empty_channel_name)
