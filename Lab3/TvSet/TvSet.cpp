@@ -23,12 +23,6 @@ m_isOn = false;
 
 string CTvSet::GetChannelName(int number)const
 {
-	/*if (channelNumber.find(GetCurrChannel()) != channelNumber.end())
-	{
-		return channelNumber.find(GetCurrChannel())->second;
-	}
-	return ("This channel name is empty.");
-	*/
 	return (channelNumber.find(number) != channelNumber.end()
 		? channelNumber.find(number)->second : (""));
 }

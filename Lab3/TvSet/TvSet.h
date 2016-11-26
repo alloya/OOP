@@ -17,7 +17,6 @@ public:
 	bool SelectPreviousChannel();
 	bool SetChannelName(int channelNumber, string channelName);
 	int GetCurrChannel()const;
-	//void Info();
 	bool DeleteChannelName(string name);
 	
 private:

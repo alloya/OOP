@@ -178,7 +178,6 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 				BOOST_CHECK_EQUAL(tv.GetChannelName(2), "");
 				BOOST_CHECK_EQUAL(tv.GetChannelName(1), "OPT");
 			}
-
 		}
 	}
 
