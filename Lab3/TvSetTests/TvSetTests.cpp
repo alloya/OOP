@@ -42,6 +42,12 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 		BOOST_CHECK(!tv.SelectChannel("OPT"));
 	}
 
+	BOOST_AUTO_TEST_CASE(cant_rename_channel_if_turned_off)
+	{
+		BOOST_CHECK(!tv.IsTurnedOn());
+		BOOST_CHECK(!tv.SetChannelName(1, "OPT"));
+	}
+
 	BOOST_AUTO_TEST_CASE(can_be_turned_on)
 	{
 		tv.TurnOn();
@@ -137,8 +143,18 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 		BOOST_AUTO_TEST_CASE(can_delete_channel_name)
 		{
 			BOOST_CHECK(!tv.DeleteChannelName("OPT"));
-			tv.SetChannelName(1, "OPT");
+			BOOST_CHECK(tv.SetChannelName(1, "OPT"));
 			BOOST_CHECK(tv.DeleteChannelName("OPT"));
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "empty");
+		}
+
+		BOOST_AUTO_TEST_CASE(can_rename_channel)
+		{
+			BOOST_CHECK(tv.SetChannelName(1, "OPT"));
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "OPT");
+			BOOST_CHECK(tv.SetChannelName(2, "OPT"));
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "empty");
+			BOOST_CHECK_EQUAL(tv.GetChannelName(2), "OPT");
 		}
 
 		BOOST_AUTO_TEST_CASE(can_be_turned_off)

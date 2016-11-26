@@ -48,11 +48,6 @@ bool IsNameCorrect(string & name)
 	return false;
 }
 
-//bool IsNameExist(string name)
-//{
-//	return (chan);
-//}
-
 bool CTvSet::SelectChannel(int channel)
 {
 	if ((m_isOn) && IsNumberCorect(channel))
@@ -90,8 +85,17 @@ bool CTvSet::SetChannelName(int number, string name)
 {
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
-		channelName.insert(pair<string, size_t>(name, number));
-		channelNumber.insert(pair<size_t, string>(number, name));
+		if (channelName.find(name) == channelName.end())
+		{
+			channelName.insert(pair<string, size_t>(name, number));
+			channelNumber.insert(pair<size_t, string>(number, name));
+		}
+		else
+		{
+			DeleteChannelName(name);
+			channelName.insert(pair<string, size_t>(name, number));
+			channelNumber.insert(pair<size_t, string>(number, name));
+		}
 		return true;
 	}
 	return false;
