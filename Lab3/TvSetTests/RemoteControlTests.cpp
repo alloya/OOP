@@ -58,7 +58,7 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		tv.TurnOn();
 		tv.SelectChannel(42);
 		tv.SetChannelName(42, "Netflix");
-		VerifyCommandHandling("Info", 42, "TV is turned on.\nChannel is: 42 Netflix\n");
+		VerifyCommandHandling("Info", 42, "TV is turned on.\nChannel is: 42 Netflix\n42 - Netflix\n");
 	}
 
 	BOOST_AUTO_TEST_CASE(cant_select_channel_when_tv_is_turned_off)
@@ -111,6 +111,12 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		{
 			VerifyCommandHandling("SelectChannel 42", 42, "Channel switched to 42.\n");
 		}
+
+		BOOST_AUTO_TEST_CASE(can_select_a_valid_channel_by_name)
+		{
+			tv.SetChannelName(42, "PTP");
+			VerifyCommandHandling("SelectChannel PTP", 42, "Channel switched to 42 PTP.\n");
+		}
 	
 		BOOST_AUTO_TEST_CASE(cant_select_an_invalid_channel)
 		{
@@ -128,7 +134,7 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 
 		BOOST_AUTO_TEST_CASE(doesnt_have_channel_name_by_default)
 		{
-			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 name is empty.\n");
+			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 \n");
 		}
 
 		BOOST_AUTO_TEST_CASE(can_set_channel_name)
@@ -139,9 +145,9 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 
 		BOOST_AUTO_TEST_CASE(can_get_channel_name)
 		{
-			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 name is empty.\n");
+			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 \n");
 			tv.SetChannelName(1, "OPT");
-			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 name is OPT.\n");
+			VerifyCommandHandling("GetChannelName 1", 1, "Channel 1 OPT\n");
 		}
 
 		BOOST_AUTO_TEST_CASE(can_get_channel_by_name)
@@ -150,12 +156,6 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			tv.SetChannelName(1, "OPT");
 			VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is 1.\n");
 		}
-
-		/*BOOST_AUTO_TEST_CASE(can_rename_channel)
-		{
-			VerifyCommandHandling("SetChannelName 1 Netflix", 1, "Channel name is set to Netflix.\n");
-			VerifyCommandHandling("SetChannelName 100 Netflix", 1, "Channel number must be from 1 to 99. Name must not be empty or contain only whitespaces.\n");
-		}*/
 
 		BOOST_AUTO_TEST_CASE(can_delete_channel_name)
 		{

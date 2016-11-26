@@ -40,6 +40,11 @@ bool CRemoteControl::HandleCommand()
 	return false;
 }
 
+bool IsDigits(const string &str)
+{
+	return all_of(str.begin(), str.end(), ::isdigit);
+}
+
 bool CRemoteControl::TurnOn(std::istream & /*args*/)
 {
 	m_tv.TurnOn();
@@ -60,7 +65,7 @@ bool CRemoteControl::Info(std::istream & /*args*/)
 		? ("TV is turned on.\nChannel is: " + to_string(m_tv.GetCurrChannel()) + " " 
 			+ (m_tv.GetChannelName(m_tv.GetCurrChannel())) + "\n") : "TV is turned off.\n";
 	
-	string listOfChannels = "";
+	string listOfChannels = m_tv.GetListOfNamedChannels();
 
 	m_output << info << listOfChannels;
 
@@ -69,13 +74,21 @@ bool CRemoteControl::Info(std::istream & /*args*/)
 
 bool CRemoteControl::SelectChannel(std::istream & args)
 {
-	int channel;
+	string::size_type sz;
+	string channel;
 	string info;
 	args >> channel;
 
-	if (m_tv.IsTurnedOn())
+	if (m_tv.IsTurnedOn() && IsDigits(channel))
 	{
-		info = (m_tv.SelectChannel(channel)) ? ("Channel switched to " + to_string(m_tv.GetCurrChannel()) + ".\n")
+		info = (m_tv.SelectChannel(stoi(channel,&sz))) ? ("Channel switched to " 
+			+ to_string(m_tv.GetCurrChannel()) + m_tv.GetChannelName(m_tv.GetCurrChannel()) + ".\n")
+			: "Incorrect channel. Enter number from 1 to 99.\n";
+	}
+	else if (m_tv.IsTurnedOn() && !IsDigits(channel))
+	{
+		info = m_tv.SelectChannel(channel) ? ("Channel switched to " + to_string(m_tv.GetCurrChannel()) 
+			+ " " + m_tv.GetChannelName(m_tv.GetCurrChannel()) + ".\n")
 			: "Incorrect channel. Enter number from 1 to 99.\n";
 	}
 	else
@@ -129,7 +142,7 @@ bool CRemoteControl::GetChannelName(std::istream & args)
 
 	if (m_tv.IsTurnedOn())
 	{
-		info = ("Channel " + to_string(channel) + " name is " + m_tv.GetChannelName(channel) + ".\n");
+		info = ("Channel " + to_string(channel) + " " + m_tv.GetChannelName(channel) + "\n");
 	}
 	else
 	{

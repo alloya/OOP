@@ -123,7 +123,7 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 
 		BOOST_AUTO_TEST_CASE(can_get_channel_name)
 		{
-			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "empty");
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "");
 			tv.SetChannelName(1, "   First   and only   ");
 			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "First and only");
 		}
@@ -145,15 +145,15 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 			BOOST_CHECK(!tv.DeleteChannelName("OPT"));
 			BOOST_CHECK(tv.SetChannelName(1, "OPT"));
 			BOOST_CHECK(tv.DeleteChannelName("OPT"));
-			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "empty");
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "");
 		}
 
-		BOOST_AUTO_TEST_CASE(can_rename_channel)
+		BOOST_AUTO_TEST_CASE(can_reassociate_channel_name)
 		{
 			BOOST_CHECK(tv.SetChannelName(1, "OPT"));
 			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "OPT");
 			BOOST_CHECK(tv.SetChannelName(2, "OPT"));
-			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "empty");
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "");
 			BOOST_CHECK_EQUAL(tv.GetChannelName(2), "OPT");
 		}
 

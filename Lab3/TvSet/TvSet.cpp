@@ -30,12 +30,27 @@ string CTvSet::GetChannelName(int number)const
 	return ("This channel name is empty.");
 	*/
 	return (channelNumber.find(number) != channelNumber.end()
-		? channelNumber.find(number)->second : ("empty"));
+		? channelNumber.find(number)->second : (""));
 }
 
 bool IsNumberCorect(int const number)
 {
 	return ((number < 100) && (number > 0));
+}
+
+string CTvSet::GetListOfNamedChannels()
+{
+	string list = "";
+	map<size_t, string>::iterator it;
+	if (m_isOn)
+	{
+		for (it = channelNumber.begin(); it != channelNumber.end(); ++it)
+		{
+			list = list + (to_string(it->first)) + " - " + it->second + '\n';
+		}
+	}
+	
+	return list;
 }
 
 bool IsNameCorrect(string & name)
@@ -85,17 +100,13 @@ bool CTvSet::SetChannelName(int number, string name)
 {
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
-		if (channelName.find(name) == channelName.end())
-		{
-			channelName.insert(pair<string, size_t>(name, number));
-			channelNumber.insert(pair<size_t, string>(number, name));
-		}
-		else
+		if (channelName.find(name) != channelName.end())
 		{
 			DeleteChannelName(name);
-			channelName.insert(pair<string, size_t>(name, number));
-			channelNumber.insert(pair<size_t, string>(number, name));
 		}
+
+		channelName.insert(pair<string, size_t>(name, number));
+		channelNumber.insert(pair<size_t, string>(number, name));
 		return true;
 	}
 	return false;

@@ -11,6 +11,7 @@ public:
 	void TurnOff();
 	string GetChannelName(int channel)const;
 	string GetChannelByName(string channelName)const;
+	string GetListOfNamedChannels();
 	bool SelectChannel(int channel);
 	bool SelectChannel(string name);
 	bool SelectPreviousChannel();
