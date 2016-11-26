@@ -1,6 +1,7 @@
 #pragma once
 #include "stdafx.h"
 
+using namespace std;
 
 class CTvSet
 {
@@ -8,23 +9,27 @@ public:
 	bool IsTurnedOn()const;
 	void TurnOn();
 	void TurnOff();
-	std::string GetChannelName(int channel)const;
-	std::string GetChannelByName(std::string channelName)const;
+	string GetChannelName(int channel)const;
+	string GetChannelByName(string channelName)const;
 	bool SelectChannel(int channel);
 	bool SelectPreviousChannel();
-	bool SetChannelName(int channelNumber, std::string channelName);
+	bool SetChannelName(int channelNumber, string channelName);
 	int GetCurrChannel()const;
 	//void Info();
+	bool DeleteChannelName(string name);
 	
 private:
-	typedef std::map<std::string, size_t> MapName;
-	typedef std::map<size_t, std::string> MapNumber;
+	typedef map<string, size_t> MapName;
+	typedef map<string, size_t>::iterator ItName;
+	typedef map<size_t, string> MapNumber;
+	typedef map<size_t, string>::iterator ItNumber;
 	bool m_isOn = false;
 	int m_currChannel = 1;
 	int m_prevChannel = 1;
 
 	MapName channelName;
+	ItName itName;
 	MapNumber channelNumber;
-	//std::string m_name = "";
+	ItNumber itNumber;
 };
 

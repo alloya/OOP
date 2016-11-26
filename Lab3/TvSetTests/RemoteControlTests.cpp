@@ -82,6 +82,11 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		VerifyCommandHandling("GetChannelByName OPT", none, "Can't get channel number because TV is turned off.\n");
 	}
 
+	BOOST_AUTO_TEST_CASE(cant_delete_channel_name_when_tv_is_turned_off)
+	{
+		VerifyCommandHandling("DeleteChannelName ORT ", none, "Can't delete channel name because TV is turned off.\n");
+	}
+
 	struct when_turned_on_ : RemoteControlFixture
 	{
 		when_turned_on_()
@@ -151,6 +156,13 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			VerifyCommandHandling("SetChannelName 1 Netflix", 1, "Channel name is set to Netflix.\n");
 			VerifyCommandHandling("SetChannelName 100 Netflix", 1, "Channel number must be from 1 to 99. Name must not be empty or contain only whitespaces.\n");
 		}*/
+
+		BOOST_AUTO_TEST_CASE(can_delete_channel_name)
+		{
+			VerifyCommandHandling("DeleteChannelName OPT", 1, "Channel name OPT not exists.\n");
+			tv.SetChannelName(1, "OPT");
+			VerifyCommandHandling("DeleteChannelName OPT", 1, "Channel name OPT is deleted.\n");
+		}
 	}
 
 BOOST_AUTO_TEST_SUITE_END()

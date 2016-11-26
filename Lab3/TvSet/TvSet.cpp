@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "TvSet.h"
 
+using namespace std;
 
 bool CTvSet::IsTurnedOn() const
 {
@@ -17,10 +18,10 @@ void CTvSet::TurnOn()
 
 void CTvSet::TurnOff()
 {
-	m_isOn = false;
+m_isOn = false;
 }
 
-std::string CTvSet::GetChannelName(int number)const
+string CTvSet::GetChannelName(int number)const
 {
 	/*if (channelNumber.find(GetCurrChannel()) != channelNumber.end())
 	{
@@ -37,9 +38,9 @@ bool IsNumberCorect(int const number)
 	return ((number < 100) && (number > 0));
 }
 
-bool IsNameCorrect(std::string & name)
+bool IsNameCorrect(string & name)
 {
-	name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
+	name = regex_replace(name, regex("^ +| +$|( ) +"), "$1");
 	if (!name.empty())
 	{
 		return true;
@@ -62,20 +63,20 @@ bool CTvSet::SelectPreviousChannel()
 {
 	if (m_isOn)
 	{
-		std::swap(m_currChannel, m_prevChannel);
+		swap(m_currChannel, m_prevChannel);
 		return true;
 	}
 	return false;
 }
 
-bool CTvSet::SetChannelName(int number, std::string name)
+bool CTvSet::SetChannelName(int number, string name)
 {
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
 		//m_name = name;
 		//mySecondMap.insert ( pair<char,int>(c,i) );
-		channelName.insert(std::pair<std::string, size_t>(name, number));
-		channelNumber.insert(std::pair<size_t, std::string>(number, name));
+		channelName.insert(pair<string, size_t>(name, number));
+		channelNumber.insert(pair<size_t, string>(number, name));
 		return true;
 	}
 	return false;
@@ -85,6 +86,7 @@ int CTvSet::GetCurrChannel() const
 {
 	return m_isOn ? m_currChannel : 0;
 }
+
 
 //void CTvSet::Info()
 //{
@@ -101,9 +103,25 @@ int CTvSet::GetCurrChannel() const
 	//}
 //}
 
-std::string CTvSet::GetChannelByName(std::string name) const
+string CTvSet::GetChannelByName(string name) const
 {
 	return (channelName.find(name) != channelName.end()
-		? std::to_string(channelName.find(name)->second) : ("not exist"));
+		? to_string(channelName.find(name)->second) : ("not exist"));
 }
 
+bool CTvSet::DeleteChannelName(string name)
+{
+	map<string, size_t>::iterator itName = channelName.find(name);
+	map<size_t, string>::iterator itNumber;
+	//itNumber = channelName.find(name);
+	if (itName != channelName.end())
+	{
+		int number = itName->second;
+		channelName.erase(itName);
+		//itNumber = channelNumber.find(number);
+		channelNumber.erase(channelNumber.find(number));
+		return true;
+	}
+	
+	return false;
+}
