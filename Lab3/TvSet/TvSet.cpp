@@ -104,7 +104,11 @@ bool CTvSet::SetChannelName(int number, string name)
 		{
 			DeleteChannelName(name);
 		}
-
+		else if (channelNumber.find(number) != channelNumber.end())
+		{
+			channelNumber.find(number)->second = name;
+		}
+		
 		channelName.insert(pair<string, size_t>(name, number));
 		channelNumber.insert(pair<size_t, string>(number, name));
 		return true;

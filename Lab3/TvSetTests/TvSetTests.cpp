@@ -64,6 +64,12 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 
 	BOOST_FIXTURE_TEST_SUITE(when_turned_on, when_turned_on_)
 		
+		BOOST_AUTO_TEST_CASE(can_be_turned_off)
+		{
+			tv.TurnOff();
+			BOOST_CHECK(!tv.IsTurnedOn());
+		}
+		
 		BOOST_AUTO_TEST_CASE(channel_at_start_is_1)
 		{
 			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 1);
@@ -73,6 +79,11 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 		{
 			tv.SelectPreviousChannel();
 			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 1);
+		}
+
+		BOOST_AUTO_TEST_CASE(channel_name_is_empty_at_first)
+		{
+			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "");
 		}
 
 		BOOST_AUTO_TEST_CASE(can_change_channel)
@@ -89,14 +100,6 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 1);
 		}
 
-		BOOST_AUTO_TEST_CASE(channel_can_be_selected_by_name)
-		{
-			tv.SetChannelName(42, "OPT");
-			BOOST_CHECK(!tv.SelectChannel("OP3"));
-			BOOST_CHECK(tv.SelectChannel("OPT"));
-			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 42);
-		}
-		
 		BOOST_AUTO_TEST_CASE(remembers_previous_channels)
 		{
 			tv.SelectChannel(33);
@@ -115,52 +118,75 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 			BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 1);
 		}
 
+		BOOST_AUTO_TEST_CASE(cant_set_empty_channel_name)
+		{
+			BOOST_CHECK(!tv.SetChannelName(1, "    "));
+		}
+
 		BOOST_AUTO_TEST_CASE(can_set_channel_name)
 		{
 			tv.SetChannelName(1, "   First   and only   ");
 			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "First and only");
 		}
 
-		BOOST_AUTO_TEST_CASE(can_get_channel_name)
+		struct when_channel_name_is_set_ : TvSetFixture
 		{
-			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "");
-			tv.SetChannelName(1, "   First   and only   ");
-			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "First and only");
-		}
+			when_channel_name_is_set_()
+			{
+				tv.TurnOn();
+				tv.SetChannelName(2, "OPT");
+			}
+		};
+		
+		BOOST_FIXTURE_TEST_SUITE(when_channel_name_is_set, when_channel_name_is_set_)
+		
+			BOOST_AUTO_TEST_CASE(can_get_channel_name)
+			{
+				//BOOST_CHECK_EQUAL(tv.GetChannelName(1), "");
+				//tv.SetChannelName(1, "   First   and only   ");
+				BOOST_CHECK_EQUAL(tv.GetChannelName(2), "OPT");
+			}
 
-		BOOST_AUTO_TEST_CASE(can_get_channel_number_by_name)
-		{
-			BOOST_CHECK_EQUAL(tv.GetChannelByName("OPT"), "not exist");
-			tv.SetChannelName(2, "OPT");
-			BOOST_CHECK_EQUAL(tv.GetChannelByName("OPT"), "2");
-		}
+			BOOST_AUTO_TEST_CASE(can_get_channel_number_by_name)
+			{
+				//BOOST_CHECK_EQUAL(tv.GetChannelByName("OPT"), "not exist");
+				//tv.SetChannelName(2, "OPT");
+				BOOST_CHECK_EQUAL(tv.GetChannelByName("OPT"), "2");
+			}
+		
+			BOOST_AUTO_TEST_CASE(channel_can_be_selected_by_name)
+			{
+				//tv.SetChannelName(42, "OPT");
+				BOOST_CHECK(!tv.SelectChannel("OP3"));
+				BOOST_CHECK(tv.SelectChannel("OPT"));
+				BOOST_CHECK_EQUAL(tv.GetCurrChannel(), 2);
+			}
+		
+			BOOST_AUTO_TEST_CASE(can_delete_channel_name)
+			{
+				//BOOST_CHECK(!tv.DeleteChannelName("OPT"));
+				//BOOST_CHECK(tv.SetChannelName(2, "OPT"));
+				BOOST_CHECK(tv.DeleteChannelName("OPT"));
+				BOOST_CHECK_EQUAL(tv.GetChannelName(2), "");
+			}
 
-		BOOST_AUTO_TEST_CASE(cant_set_empty_channel_name)
-		{
-			BOOST_CHECK(!tv.SetChannelName(1, "    "));
-		}
+			BOOST_AUTO_TEST_CASE(can_rename_channel)
+			{
+				//BOOST_CHECK(tv.SetChannelName(1, "OPT"));
+				//BOOST_CHECK_EQUAL(tv.GetChannelName(2), "OPT");
+				BOOST_CHECK(tv.SetChannelName(2, "PTP"));
+				BOOST_CHECK_EQUAL(tv.GetChannelName(2), "PTP");
+			}
 
-		BOOST_AUTO_TEST_CASE(can_delete_channel_name)
-		{
-			BOOST_CHECK(!tv.DeleteChannelName("OPT"));
-			BOOST_CHECK(tv.SetChannelName(1, "OPT"));
-			BOOST_CHECK(tv.DeleteChannelName("OPT"));
-			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "");
-		}
+			BOOST_AUTO_TEST_CASE(can_reassociate_channel_name)
+			{
+				//BOOST_CHECK(tv.SetChannelName(1, "OPT"));
+				//BOOST_CHECK_EQUAL(tv.GetChannelName(1), "OPT");
+				BOOST_CHECK(tv.SetChannelName(1, "OPT"));
+				BOOST_CHECK_EQUAL(tv.GetChannelName(2), "");
+				BOOST_CHECK_EQUAL(tv.GetChannelName(1), "OPT");
+			}
 
-		BOOST_AUTO_TEST_CASE(can_reassociate_channel_name)
-		{
-			BOOST_CHECK(tv.SetChannelName(1, "OPT"));
-			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "OPT");
-			BOOST_CHECK(tv.SetChannelName(2, "OPT"));
-			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "");
-			BOOST_CHECK_EQUAL(tv.GetChannelName(2), "OPT");
-		}
-
-		BOOST_AUTO_TEST_CASE(can_be_turned_off)
-		{
-			tv.TurnOff();
-			BOOST_CHECK(!tv.IsTurnedOn());
 		}
 	}
 
