@@ -1,6 +1,3 @@
-// TvSet.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
 #include "TvSet.h"
 
@@ -100,7 +97,7 @@ bool CTvSet::SetChannelName(int number, string name)
 		}
 		else if (channelNumber.find(number) != channelNumber.end())
 		{
-			channelNumber.find(number)->second = name;
+			DeleteChannelName(channelNumber.find(number)->second);
 		}
 		
 		channelName.insert(pair<string, size_t>(name, number));

@@ -117,11 +117,10 @@ bool CRemoteControl::SetChannelName(std::istream & args)
 	string info;
 	string name;
 	args >> channel;
-	args >> name;
-
+	getline(args, name);
 	if (m_tv.IsTurnedOn())
 	{
-		info = (m_tv.SetChannelName(channel, name)) ? ("Channel " + to_string(channel) + " name is set to " + name + ".\n")
+		info = (m_tv.SetChannelName(channel, name)) ? ("Channel " + to_string(channel) + " name is set to " + m_tv.GetChannelName(channel) + ".\n")
 			: "Channel number must be from 1 to 99. Name must not be empty or contain only whitespaces.\n";
 	}
 	else
