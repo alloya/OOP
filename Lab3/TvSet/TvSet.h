@@ -12,12 +12,12 @@ public:
 	string GetChannelName(size_t channel)const;
 	size_t GetChannelByName(string channelName)const;
 	string GetListOfNamedChannels();
-	bool SelectChannel(int channel);
-	bool SelectChannel(string name);
+	bool SelectChannel(int const &channel);
+	bool SelectChannel(string const &name);
 	bool SelectPreviousChannel();
-	bool SetChannelName(int channelNumber, string channelName);
+	bool SetChannelName(int const &channelNumber, string channelName);
 	size_t GetCurrChannel()const;
-	bool DeleteChannelName(string name);
+	bool DeleteChannelName(string const &name);
 	
 private:
 	typedef map<string, size_t> MapName;

@@ -54,7 +54,7 @@ bool IsNameCorrect(string & name)
 	return false;
 }
 
-bool CTvSet::SelectChannel(int channel)
+bool CTvSet::SelectChannel(int const &channel)
 {
 	if ((m_isOn) && IsNumberCorect(channel))
 	{
@@ -65,7 +65,7 @@ bool CTvSet::SelectChannel(int channel)
 	return false;
 }
 
-bool CTvSet::SelectChannel(string name)
+bool CTvSet::SelectChannel(string const &name)
 {
 	map<string, size_t>::iterator it = m_channelName.find(name);
 	if ((m_isOn) && (it != m_channelName.end()))
@@ -87,7 +87,7 @@ bool CTvSet::SelectPreviousChannel()
 	return false;
 }
 
-bool CTvSet::SetChannelName(int number, string name)
+bool CTvSet::SetChannelName(int const &number, string name)
 {
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
@@ -118,7 +118,7 @@ size_t CTvSet::GetChannelByName(string name) const
 		? (m_channelName.find(name)->second) : 0);
 }
 
-bool CTvSet::DeleteChannelName(string name)
+bool CTvSet::DeleteChannelName(string const &name)
 {
 	map<string, size_t>::iterator itName = m_channelName.find(name);
 	if (m_isOn && itName != m_channelName.end())
