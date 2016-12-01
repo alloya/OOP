@@ -18,7 +18,7 @@ void CTvSet::TurnOff()
 m_isOn = false;
 }
 
-string CTvSet::GetChannelName(int number)const
+string CTvSet::GetChannelName(size_t number)const
 {
 	return (channelNumber.find(number) != channelNumber.end()
 		? channelNumber.find(number)->second : (""));
@@ -107,7 +107,7 @@ bool CTvSet::SetChannelName(int number, string name)
 	return false;
 }
 
-int CTvSet::GetCurrChannel() const
+size_t CTvSet::GetCurrChannel() const
 {
 	return m_isOn ? m_currChannel : 0;
 }
@@ -123,7 +123,7 @@ bool CTvSet::DeleteChannelName(string name)
 	map<string, size_t>::iterator itName = channelName.find(name);
 	if (m_isOn && itName != channelName.end())
 	{
-		int number = itName->second;
+		size_t number = itName->second;
 		channelName.erase(itName);
 		channelNumber.erase(number);
 		return true;
