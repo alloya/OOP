@@ -36,13 +36,13 @@ string FindAndReplace(string const & subject, string const & search, string  con
 			rightPosition = subject.find(search, leftPosition);
 			if (rightPosition != string::npos)
 			{
-				newString += subject.substr(leftPosition, rightPosition - leftPosition);
+				newString.append(subject, leftPosition, rightPosition - leftPosition);
 				newString += replace;
 				leftPosition = rightPosition + search.length();
 			}
 		}
 
-		newString += subject.substr(leftPosition, subject.length());
+		newString.append(subject, leftPosition, subject.length());
 
 		return newString;
 	}
