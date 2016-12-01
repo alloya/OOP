@@ -1,9 +1,7 @@
-// TvSet.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
 #include "TvSet.h"
 
+using namespace std;
 
 bool CTvSet::IsTurnedOn() const
 {
@@ -17,12 +15,13 @@ void CTvSet::TurnOn()
 
 void CTvSet::TurnOff()
 {
-	m_isOn = false;
+m_isOn = false;
 }
 
-std::string CTvSet::GetName()const
+string CTvSet::GetChannelName(size_t number)const
 {
-	return m_name;
+	return (channelNumber.find(number) != channelNumber.end()
+		? channelNumber.find(number)->second : (""));
 }
 
 bool IsNumberCorect(int const number)
@@ -30,9 +29,24 @@ bool IsNumberCorect(int const number)
 	return ((number < 100) && (number > 0));
 }
 
-bool IsNameCorrect(std::string & name)
+string CTvSet::GetListOfNamedChannels()
 {
-	name = std::regex_replace(name, std::regex("^ +| +$|( ) +"), "$1");
+	string list = "";
+	map<size_t, string>::iterator it;
+	if (m_isOn)
+	{
+		for (it = channelNumber.begin(); it != channelNumber.end(); ++it)
+		{
+			list = list + (to_string(it->first)) + " - " + it->second + '\n';
+		}
+	}
+	
+	return list;
+}
+
+bool IsNameCorrect(string & name)
+{
+	name = regex_replace(name, regex("^ +| +$|( ) +"), "$1");
 	if (!name.empty())
 	{
 		return true;
@@ -51,41 +65,69 @@ bool CTvSet::SelectChannel(int channel)
 	return false;
 }
 
+bool CTvSet::SelectChannel(string name)
+{
+	map<string, size_t>::iterator it = channelName.find(name);
+	if ((m_isOn) && (it != channelName.end()))
+	{
+		m_prevChannel = m_currChannel;
+		m_currChannel = it -> second;
+		return true;
+	}
+	return false;
+}
+
 bool CTvSet::SelectPreviousChannel()
 {
 	if (m_isOn)
 	{
-		std::swap(m_currChannel, m_prevChannel);
+		swap(m_currChannel, m_prevChannel);
 		return true;
 	}
 	return false;
 }
 
-bool CTvSet::SetChannelName(int number, std::string name)
+bool CTvSet::SetChannelName(int number, string name)
 {
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
-		m_name = name;
+		if (channelName.find(name) != channelName.end())
+		{
+			DeleteChannelName(name);
+		}
+		else if (channelNumber.find(number) != channelNumber.end())
+		{
+			DeleteChannelName(channelNumber.find(number)->second);
+		}
+		
+		channelName.insert(pair<string, size_t>(name, number));
+		channelNumber.insert(pair<size_t, string>(number, name));
 		return true;
 	}
 	return false;
 }
 
-int CTvSet::GetCurrChannel() const
+size_t CTvSet::GetCurrChannel() const
 {
 	return m_isOn ? m_currChannel : 0;
 }
 
-void CTvSet::Info()
+string CTvSet::GetChannelByName(string name) const
 {
-	if (m_isOn)
-	{
-		std::cout << "TV is ON. Current channel is " << m_currChannel << 
-			" - " << m_name << std::endl;
-	}
-	else
-	{
-		std::cout << "TV is OFF." << std::endl;
-	}
+	return (channelName.find(name) != channelName.end()
+		? to_string(channelName.find(name)->second) : ("not exist"));
 }
 
+bool CTvSet::DeleteChannelName(string name)
+{
+	map<string, size_t>::iterator itName = channelName.find(name);
+	if (m_isOn && itName != channelName.end())
+	{
+		size_t number = itName->second;
+		channelName.erase(itName);
+		channelNumber.erase(number);
+		return true;
+	}
+	
+	return false;
+}

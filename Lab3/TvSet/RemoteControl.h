@@ -16,6 +16,9 @@ private:
 	bool SelectChannel(std::istream & args);
 	bool SelectPreviousChannel(std::istream & args);
 	bool SetChannelName(std::istream & args);
+	bool GetChannelName(std::istream & args);
+	bool GetChannelByName(std::istream & args);
+	bool DeleteChannelName(std::istream & args);
 private:
 	typedef std::map<std::string, std::function<bool(std::istream & args)>> ActionMap;
 

@@ -22,5 +22,6 @@
 #include <map>
 #include <string>
 #include <regex>
+#include <assert.h>
 
 // TODO: reference additional headers your program requires here
