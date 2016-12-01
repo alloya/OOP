@@ -20,8 +20,8 @@ m_isOn = false;
 
 string CTvSet::GetChannelName(size_t number)const
 {
-	return (channelNumber.find(number) != channelNumber.end()
-		? channelNumber.find(number)->second : (""));
+	return (m_channelNumber.find(number) != m_channelNumber.end()
+		? m_channelNumber.find(number)->second : (""));
 }
 
 bool IsNumberCorect(int const number)
@@ -35,7 +35,7 @@ string CTvSet::GetListOfNamedChannels()
 	map<size_t, string>::iterator it;
 	if (m_isOn)
 	{
-		for (it = channelNumber.begin(); it != channelNumber.end(); ++it)
+		for (it = m_channelNumber.begin(); it != m_channelNumber.end(); ++it)
 		{
 			list = list + (to_string(it->first)) + " - " + it->second + '\n';
 		}
@@ -67,8 +67,8 @@ bool CTvSet::SelectChannel(int channel)
 
 bool CTvSet::SelectChannel(string name)
 {
-	map<string, size_t>::iterator it = channelName.find(name);
-	if ((m_isOn) && (it != channelName.end()))
+	map<string, size_t>::iterator it = m_channelName.find(name);
+	if ((m_isOn) && (it != m_channelName.end()))
 	{
 		m_prevChannel = m_currChannel;
 		m_currChannel = it -> second;
@@ -91,17 +91,17 @@ bool CTvSet::SetChannelName(int number, string name)
 {
 	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
-		if (channelName.find(name) != channelName.end())
+		if (m_channelName.find(name) != m_channelName.end())
 		{
 			DeleteChannelName(name);
 		}
-		else if (channelNumber.find(number) != channelNumber.end())
+		else if (m_channelNumber.find(number) != m_channelNumber.end())
 		{
-			DeleteChannelName(channelNumber.find(number)->second);
+			DeleteChannelName(m_channelNumber.find(number)->second);
 		}
 		
-		channelName.insert(pair<string, size_t>(name, number));
-		channelNumber.insert(pair<size_t, string>(number, name));
+		m_channelName.insert(pair<string, size_t>(name, number));
+		m_channelNumber.insert(pair<size_t, string>(number, name));
 		return true;
 	}
 	return false;
@@ -114,18 +114,18 @@ size_t CTvSet::GetCurrChannel() const
 
 string CTvSet::GetChannelByName(string name) const
 {
-	return (channelName.find(name) != channelName.end()
-		? to_string(channelName.find(name)->second) : ("not exist"));
+	return (m_channelName.find(name) != m_channelName.end()
+		? to_string(m_channelName.find(name)->second) : ("not exist"));
 }
 
 bool CTvSet::DeleteChannelName(string name)
 {
-	map<string, size_t>::iterator itName = channelName.find(name);
-	if (m_isOn && itName != channelName.end())
+	map<string, size_t>::iterator itName = m_channelName.find(name);
+	if (m_isOn && itName != m_channelName.end())
 	{
 		size_t number = itName->second;
-		channelName.erase(itName);
-		channelNumber.erase(number);
+		m_channelName.erase(itName);
+		m_channelNumber.erase(number);
 		return true;
 	}
 	

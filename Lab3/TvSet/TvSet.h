@@ -26,7 +26,7 @@ private:
 	size_t m_currChannel = 1;
 	size_t m_prevChannel = 1;
 
-	MapName channelName;
-	MapNumber channelNumber;
+	MapName m_channelName;
+	MapNumber m_channelNumber;
 };
 
