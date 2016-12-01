@@ -161,7 +161,7 @@ bool CRemoteControl::GetChannelByName(std::istream & args)
 
 	if (m_tv.IsTurnedOn())
 	{
-		info = ("Channel " + name + " is " + m_tv.GetChannelByName(name) + ".\n");
+		info = ("Channel " + name + " is " + to_string(m_tv.GetChannelByName(name)) + ".\n");
 	}
 	else
 	{

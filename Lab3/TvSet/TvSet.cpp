@@ -112,10 +112,10 @@ size_t CTvSet::GetCurrChannel() const
 	return m_isOn ? m_currChannel : 0;
 }
 
-string CTvSet::GetChannelByName(string name) const
+size_t CTvSet::GetChannelByName(string name) const
 {
 	return (m_channelName.find(name) != m_channelName.end()
-		? to_string(m_channelName.find(name)->second) : ("not exist"));
+		? (m_channelName.find(name)->second) : 0);
 }
 
 bool CTvSet::DeleteChannelName(string name)

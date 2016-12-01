@@ -10,7 +10,7 @@ public:
 	void TurnOn();
 	void TurnOff();
 	string GetChannelName(size_t channel)const;
-	string GetChannelByName(string channelName)const;
+	size_t GetChannelByName(string channelName)const;
 	string GetListOfNamedChannels();
 	bool SelectChannel(int channel);
 	bool SelectChannel(string name);

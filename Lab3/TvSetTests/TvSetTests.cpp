@@ -150,7 +150,7 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 
 			BOOST_AUTO_TEST_CASE(can_get_channel_number_by_name)
 			{
-				BOOST_CHECK_EQUAL(tv.GetChannelByName("OPT"), "2");
+				BOOST_CHECK_EQUAL(tv.GetChannelByName("OPT"), 2);
 			}
 		
 			BOOST_AUTO_TEST_CASE(can_select_channel_by_name)

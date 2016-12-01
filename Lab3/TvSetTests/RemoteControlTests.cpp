@@ -171,13 +171,13 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 			BOOST_AUTO_TEST_CASE(can_delete_channel_name)
 			{
 				VerifyCommandHandling("DeleteChannelName OPT", 1, "Channel name OPT is deleted.\n");
-				VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is not exist.\n");
+				VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is 0.\n");
 			}
 
 			BOOST_AUTO_TEST_CASE(can_rename_channel)
 			{
 				VerifyCommandHandling("SetChannelName 2 PTP", 1, "Channel 2 name is set to PTP.\n");
-				VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is not exist.\n");
+				VerifyCommandHandling("GetChannelByName OPT", 1, "Channel OPT is 0.\n");
 			}
 
 			BOOST_AUTO_TEST_CASE(can_reassosiate_channel_name)
