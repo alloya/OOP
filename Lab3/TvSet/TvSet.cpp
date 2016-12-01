@@ -44,14 +44,14 @@ string CTvSet::GetListOfNamedChannels()
 	return list;
 }
 
-bool IsNameCorrect(string & name)
+string DeleteSpaces(string & name)
 {
-	name = regex_replace(name, regex("^ +| +$|( ) +"), "$1");
-	if (!name.empty())
-	{
-		return true;
-	}
-	return false;
+	return name = regex_replace(name, regex("^ +| +$|( ) +"), "$1");
+}
+
+bool IsNameCorrect(string const & name)
+{
+	return (!name.empty());
 }
 
 bool CTvSet::SelectChannel(int const &channel)
@@ -89,7 +89,7 @@ bool CTvSet::SelectPreviousChannel()
 
 bool CTvSet::SetChannelName(int const &number, string name)
 {
-	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
+	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(DeleteSpaces(name)))
 	{
 		if (m_channelName.find(name) != m_channelName.end())
 		{
