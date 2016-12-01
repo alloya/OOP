@@ -24,6 +24,15 @@ BOOST_AUTO_TEST_SUITE(Function_GetWordFrequency)
 		BOOST_CHECK(result == CountWords(test));
 	}
 
+	BOOST_AUTO_TEST_CASE(Ignores_words_register)
+	{
+		{
+			WordFerequency result = { { "day", 4 },{ "привет", 3 } };
+			istringstream test("ПривЕТ dAY\nПриВет daY\tПривет DAY day");
+			BOOST_CHECK(result == CountWords(test));
+		}
+	}
+
 BOOST_AUTO_TEST_SUITE_END()
 
 class SpecLogFormatter :
