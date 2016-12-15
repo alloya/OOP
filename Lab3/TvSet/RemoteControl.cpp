@@ -65,9 +65,12 @@ bool CRemoteControl::Info(std::istream & /*args*/)
 		? ("TV is turned on.\nChannel is: " + to_string(m_tv.GetCurrChannel()) + " " 
 			+ (m_tv.GetChannelName(m_tv.GetCurrChannel())) + "\n") : "TV is turned off.\n";
 	
-	string listOfChannels = m_tv.GetListOfNamedChannels();
-
-	m_output << info << listOfChannels;
+	map<size_t, string> listOfChannels = m_tv.GetListOfNamedChannels();
+	m_output << info;
+	for (auto it = listOfChannels.begin(); it != listOfChannels.end(); ++it)
+	{
+		m_output << to_string(it->first) << " " << it->second << endl;
+	}
 
 	return true;
 }

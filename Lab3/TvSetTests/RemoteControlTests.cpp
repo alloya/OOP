@@ -58,7 +58,7 @@ BOOST_FIXTURE_TEST_SUITE(Remote_Control, RemoteControlFixture)
 		tv.TurnOn();
 		tv.SelectChannel(42);
 		tv.SetChannelName(42, "Netflix");
-		VerifyCommandHandling("Info", 42, "TV is turned on.\nChannel is: 42 Netflix\n42 - Netflix\n");
+		VerifyCommandHandling("Info", 42, "TV is turned on.\nChannel is: 42 Netflix\n42 Netflix\n");
 	}
 
 	BOOST_AUTO_TEST_CASE(cant_select_channel_when_tv_is_turned_off)

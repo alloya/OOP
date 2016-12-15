@@ -128,7 +128,7 @@ BOOST_FIXTURE_TEST_SUITE(TvSet, TvSetFixture)
 
 		BOOST_AUTO_TEST_CASE(can_set_channel_name)
 		{
-			tv.SetChannelName(1, "   First   and only   ");
+			tv.SetChannelName(1, "   First and only   ");
 			BOOST_CHECK_EQUAL(tv.GetChannelName(1), "First and only");
 		}
 

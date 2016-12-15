@@ -11,6 +11,7 @@
 #include <tchar.h>
 
 #include <boost/algorithm/string/replace.hpp>
+#include <boost/algorithm/string/trim.hpp>
 
 #define BOOST_TEST_INCLUDED
 #pragma warning (disable: 4702)

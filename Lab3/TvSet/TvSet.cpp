@@ -29,24 +29,14 @@ bool IsNumberCorect(int const number)
 	return ((number < 100) && (number > 0));
 }
 
-string CTvSet::GetListOfNamedChannels()
+map<size_t, string> CTvSet::GetListOfNamedChannels()
 {
-	string list = "";
-	map<size_t, string>::iterator it;
-	if (m_isOn)
-	{
-		for (it = m_channelNumber.begin(); it != m_channelNumber.end(); ++it)
-		{
-			list = list + (to_string(it->first)) + " - " + it->second + '\n';
-		}
-	}
-	
-	return list;
+	return m_channelNumber;
 }
 
-string DeleteSpaces(string & name)
+void Trim(string& name)
 {
-	return regex_replace(name, regex("^ +| +$|( ) +"), "$1");
+	boost::trim(name);
 }
 
 bool IsNameCorrect(string const & name)
@@ -89,7 +79,8 @@ bool CTvSet::SelectPreviousChannel()
 
 bool CTvSet::SetChannelName(int const &number, string name)
 {
-	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(DeleteSpaces(name)))
+	Trim(name);
+	if (m_isOn && IsNumberCorect(number) && IsNameCorrect(name))
 	{
 		if (m_channelName.find(name) != m_channelName.end())
 		{
