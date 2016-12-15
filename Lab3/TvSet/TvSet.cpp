@@ -15,7 +15,7 @@ void CTvSet::TurnOn()
 
 void CTvSet::TurnOff()
 {
-m_isOn = false;
+	m_isOn = false;
 }
 
 string CTvSet::GetChannelName(size_t number)const
@@ -46,7 +46,7 @@ string CTvSet::GetListOfNamedChannels()
 
 string DeleteSpaces(string & name)
 {
-	return name = regex_replace(name, regex("^ +| +$|( ) +"), "$1");
+	return regex_replace(name, regex("^ +| +$|( ) +"), "$1");
 }
 
 bool IsNameCorrect(string const & name)
