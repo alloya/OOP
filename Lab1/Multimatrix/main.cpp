@@ -33,9 +33,9 @@ bool CheckArguments(ifstream & firstFile, ifstream & secondFile)
 
 bool GetMatrix(ifstream & file, Matrix & matrix)
 {
-	for (size_t col, row = 0; row < MATRIX_DIM; row++)
+	for (size_t row = 0; row < MATRIX_DIM; row++)
 	{
-		for (col = 0; col < MATRIX_DIM; col++)
+		for (size_t col = 0; col < MATRIX_DIM; col++)
 		{
 			if (!(file >> matrix[row][col]))
 			{
