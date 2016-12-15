@@ -29,7 +29,7 @@ string FindAndReplace(string const & subject, string const & search, string  con
 	size_t leftPosition = 0;
 	size_t rightPosition = 0;
 
-	if (!search.length() == 0)
+	if (!search.empty())
 	{
 		while (rightPosition != string::npos)
 		{
