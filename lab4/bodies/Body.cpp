@@ -5,6 +5,10 @@ CBody::CBody(const std::string & type, double density)
 	: m_density(density)
 	, m_type(type)
 {
+	if (density <= 0)
+	{
+		throw std::invalid_argument("Density can't be negative");
+	}
 }
 
 CBody::~CBody()

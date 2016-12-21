@@ -13,8 +13,13 @@
 #include <math.h>
 #include <string>
 #include <sstream>
+#include <iostream>
 #include <iomanip>
-
-
+#include <vector>
+#include <map>
+#include <iterator>
+#include <algorithm>
+#include <memory>
+#include <functional>
 
 // TODO: reference additional headers your program requires here
