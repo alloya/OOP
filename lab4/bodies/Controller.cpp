@@ -26,11 +26,9 @@ bool CBodyController::HandleCommand()
 
 void CBodyController::Info()
 {
-	m_output << "available commands:\n"
-		<< "Sphere <radius> <density>\n"
-		<< "Parallelepiped <density> <width> <height> <depth>\n"
-		<< "Cone <height> <radius> <density>\n"
-		<< "Cylinder <height> <radius> <density>\n";
+	m_output << "Use commands to create figures:\n"
+		<< "Sphere <density> <radius>\n"
+		<< "Parallelepiped <density> <width> <height> <depth>\n";
 }
 
 void CBodyController::PrintBodies(vector<shared_ptr<CBody>> const &bodies, ostream &output)
@@ -62,13 +60,13 @@ void CBodyController::GetHaviestBody(std::vector<std::shared_ptr<CBody>> const &
 
 void CBodyController::GetLightestBody(std::vector<std::shared_ptr<CBody>> const & bodies, std::ostream & output)
 {
-	static const double DENSITY_WATER = 1000.0;
+	static const double WATER_DENSITY = 1000.0;
 	static const double G = 9.8;
 	if (!bodies.empty())
 	{
 		auto minWeight = [](shared_ptr<CBody> const &x, shared_ptr<CBody> const &y)
 		{
-			return ((x->GetDensity() - DENSITY_WATER) * G * x->GetVolume()) < ((y->GetDensity() - DENSITY_WATER)* G * y->GetVolume());
+			return ((x->GetDensity() - WATER_DENSITY) * G * x->GetVolume()) < ((y->GetDensity() - WATER_DENSITY)* G * y->GetVolume());
 		};
 		output << "Body with min weight in water is " << (*min_element(bodies.begin(), bodies.end(), minWeight))->ToString();
 	}

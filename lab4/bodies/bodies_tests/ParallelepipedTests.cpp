@@ -11,7 +11,7 @@ struct Parallelepiped_
 	const double expectedDepth = 1;
 	const double expectedDensity = 2;
 	const double expectedWidth = 1;
-	const double expectedHeight = 2;
+	const double expectedHeight = 1;
 	const double expectedVolume = expectedHeight * expectedWidth * expectedDepth;
 	const CParallelepiped parallelepiped;
 	Parallelepiped_()
@@ -63,19 +63,19 @@ BOOST_FIXTURE_TEST_SUITE(Parallelepiped, Parallelepiped_)
 	}
 
 	// имеет строковое представление
-	/*BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
+	BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
 	{
 		const std::string expectedString = R"(parallelepiped:
-		density = 2
-		volume = 2
-		mass = 4
-		depth = 1
-		height = 2
-		width = 1
-	)";
+	density = 2
+	volume = 1
+	mass = 2
+	depth = 1
+	height = 1
+	width = 1
+)";
 		BOOST_CHECK_EQUAL(static_cast<const CBody &>(parallelepiped).ToString(), expectedString);
 	}
-	*/
+	
 	BOOST_AUTO_TEST_CASE(can_not_have_a_negative_width)
 	{
 		BOOST_REQUIRE_THROW(CParallelepiped(1, 0, 4, 1), std::invalid_argument);
