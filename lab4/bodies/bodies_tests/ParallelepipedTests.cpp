@@ -65,7 +65,7 @@ BOOST_FIXTURE_TEST_SUITE(Parallelepiped, Parallelepiped_)
 	// имеет строковое представление
 	BOOST_AUTO_TEST_CASE(can_be_converted_to_string)
 	{
-		const std::string expectedString = R"(parallelepiped:
+		const std::string expectedString = R"(Parallelepiped:
 	density = 2
 	volume = 1
 	mass = 2
@@ -76,22 +76,22 @@ BOOST_FIXTURE_TEST_SUITE(Parallelepiped, Parallelepiped_)
 		BOOST_CHECK_EQUAL(static_cast<const CBody &>(parallelepiped).ToString(), expectedString);
 	}
 	
-	BOOST_AUTO_TEST_CASE(can_not_have_a_negative_width)
+	BOOST_AUTO_TEST_CASE(can_have_only_a_positive_width)
 	{
 		BOOST_REQUIRE_THROW(CParallelepiped(1, 0, 4, 1), std::invalid_argument);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_not_have_a_negative_density)
+	BOOST_AUTO_TEST_CASE(can_have_only_a_positive_density)
 	{
 		BOOST_REQUIRE_THROW(CParallelepiped(0, 3, 6, 7), std::invalid_argument);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_not_have_a_negative_height)
+	BOOST_AUTO_TEST_CASE(can_have_only_a_positive_height)
 	{
 		BOOST_REQUIRE_THROW(CParallelepiped(41, 2, 0, 33), std::invalid_argument);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_not_have_a_negative_depth)
+	BOOST_AUTO_TEST_CASE(can_have_only_a_positive_depth)
 	{
 		BOOST_REQUIRE_THROW(CParallelepiped(7, 4, 2, 0), std::invalid_argument);
 	}

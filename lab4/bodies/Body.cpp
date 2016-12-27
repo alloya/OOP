@@ -7,7 +7,7 @@ CBody::CBody(const std::string & type, double density)
 {
 	if (density <= 0)
 	{
-		throw std::invalid_argument("Density can't be negative");
+		throw std::invalid_argument("Density can't be negative.");
 	}
 }
 

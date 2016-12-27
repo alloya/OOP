@@ -54,12 +54,12 @@ BOOST_FIXTURE_TEST_SUITE(Sphere, Sphere_)
 		BOOST_CHECK_EQUAL(static_cast<const CBody &>(sphere).ToString(), expectedString);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_not_have_a_negative_radius)
+	BOOST_AUTO_TEST_CASE(can_have_only_a_positive_radius)
 	{
 		BOOST_REQUIRE_THROW(CSphere(0, 2), std::invalid_argument);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_not_have_a_negative_density)
+	BOOST_AUTO_TEST_CASE(can_have_only_a_positive_density)
 	{
 		BOOST_REQUIRE_THROW(CSphere(2, 0), std::invalid_argument);
 	}

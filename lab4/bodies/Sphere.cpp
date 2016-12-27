@@ -7,7 +7,7 @@ CSphere::CSphere(double density, double radius)
 {
 	if (radius <= 0)
 	{
-		throw std::invalid_argument("Radius can't be negative\n");
+		throw std::invalid_argument("Radius must have a positive value.\n");
 	}
 }
 

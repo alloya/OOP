@@ -3,14 +3,14 @@
 
 
 CParallelepiped::CParallelepiped(double density, double width, double height, double depth) :
-	CBody("parallelepiped", density),
+	CBody("Parallelepiped", density),
 	m_depth(depth),
 	m_height(height),
 	m_width(width)
 {
 	if (depth <= 0 || height <= 0 || width <= 0)
 	{
-		throw std::invalid_argument("Height, width or depth can't be negative\n");
+		throw std::invalid_argument("Height, width and depth must have a positive value.\n");
 	}
 }
 

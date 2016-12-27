@@ -18,6 +18,8 @@ public:
 private:
 	bool CreateSphere(std::istream &args);
 	bool CreateParallelepiped(std::istream &args);
+	bool CreateCylinder(std::istream &args);
+	bool CreateCone(std::istream &args);
 	using ActionMap = std::map<std::string, std::function<bool(std::istream & args)>>;
 
 	std::vector<std::shared_ptr<CBody>> &m_bodies;
