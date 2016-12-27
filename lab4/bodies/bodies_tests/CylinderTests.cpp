@@ -71,7 +71,7 @@ BOOST_FIXTURE_TEST_SUITE(Cylinder, Cylinder_)
 		BOOST_REQUIRE_THROW(CCylinder(2, 0, 2), std::invalid_argument);
 	}
 
-	BOOST_AUTO_TEST_CASE(can_have_only_a_positive_Height)
+	BOOST_AUTO_TEST_CASE(can_have_only_a_positive_height)
 	{
 		BOOST_REQUIRE_THROW(CCylinder(2, 2, 0), std::invalid_argument);
 	}

@@ -36,6 +36,9 @@
     <ClInclude Include="..\Cylinder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Cone.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -63,6 +66,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CylinderTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Cone.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ConeTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

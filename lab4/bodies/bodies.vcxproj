@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Body.h" />
+    <ClInclude Include="Cone.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Cylinder.h" />
     <ClInclude Include="Parallelepiped.h" />
@@ -90,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="bodies.cpp" />
     <ClCompile Include="Body.cpp" />
+    <ClCompile Include="Cone.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Cylinder.cpp" />
     <ClCompile Include="Parallelepiped.cpp" />

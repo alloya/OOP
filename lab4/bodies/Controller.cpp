@@ -3,6 +3,8 @@
 #include "Body.h"
 #include "Sphere.h"
 #include "Parallelepiped.h"
+#include "Cylinder.h"
+#include "Cone.h"
 
 using namespace std;
 using namespace std::placeholders;
@@ -26,9 +28,11 @@ bool CBodyController::HandleCommand()
 
 void CBodyController::Info()
 {
-	m_output << "Use commands to create figures:\n"
-		<< "Sphere <density> <radius>\n"
-		<< "Parallelepiped <density> <width> <height> <depth>\n";
+	m_output << "Use commands to create figures:" << endl
+		<< "Sphere <density> <radius>" << endl
+		<< "Parallelepiped <density> <width> <height> <depth>" << endl
+		<< "Cylinder <density> <radius> <height>" << endl
+		<< "Cone <density> <radius> <height>" << endl;
 }
 
 void CBodyController::PrintBodies(vector<shared_ptr<CBody>> const &bodies, ostream &output)
@@ -121,12 +125,62 @@ bool CBodyController::CreateParallelepiped(std::istream & args)
 	return true;
 }
 
+bool CBodyController::CreateCylinder(std::istream & args)
+{
+	double radius;
+	double density;
+	double height;
+	if (!(args >> radius) || !(args >> density) || !(args >> height))
+	{
+		m_output << "Invalid count of arguments" << endl
+			<< "Usage: Cylinder <radius> <density> <height>" << endl;
+		return false;
+	}
+	try
+	{
+		shared_ptr<CBody> cylinder = make_shared<CCylinder>(radius, height, density);
+		m_bodies.push_back(cylinder);
+	}
+	catch (invalid_argument const &e)
+	{
+		m_output << e.what();
+		return false;
+	}
+	return true;
+}
+
+bool CBodyController::CreateCone(std::istream & args)
+{
+	double radius;
+	double density;
+	double height;
+	if (!(args >> radius) || !(args >> density) || !(args >> height))
+	{
+		m_output << "Invalid count of arguments" << endl
+			<< "Usage: Cone <radius> <density> <height>" << endl;
+		return false;
+	}
+	try
+	{
+		shared_ptr<CBody> cone = make_shared<CCone>(radius, height, density);
+		m_bodies.push_back(cone);
+	}
+	catch (invalid_argument const &e)
+	{
+		m_output << e.what();
+		return false;
+	}
+	return true;
+}
+
 CBodyController::CBodyController(vector<shared_ptr<CBody>> & bodies, istream & input, ostream & output)
 	: m_bodies(bodies)
 	, m_input(input)
 	, m_output(output)
 	, m_actionMap({ { "Sphere", bind(&CBodyController::CreateSphere, this, _1) },
-	{ "Parallelepiped", bind(&CBodyController::CreateParallelepiped, this, _1) }
+	{ "Parallelepiped", bind(&CBodyController::CreateParallelepiped, this, _1) },
+	{ "Cylinder", bind(&CBodyController::CreateCylinder, this, _1)},
+	{ "Cone", bind(&CBodyController::CreateCone, this, _1)}
 })
 {
 }
