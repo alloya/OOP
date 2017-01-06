@@ -1,9 +1,13 @@
-// Defines the entry point for the console application.
+// bodies_tests.cpp : Defines the entry point for the console application.
 //
 
 #include "stdafx.h"
+#include <boost/algorithm/string/replace.hpp>
 #include <boost/test/output/compiler_log_formatter.hpp>
 
+using namespace std;
+
+using boost::unit_test::test_unit_type;
 
 /*
 Данный класс управляет формаитрованием журнала запуска тестов
@@ -15,12 +19,15 @@ class SpecLogFormatter :
 	virtual void test_unit_start(std::ostream &os, boost::unit_test::test_unit const& tu) override
 	{
 		// перед запуском test unit-а выводим имя test unit-а, заменяя символ подчеркивания на пробел
-		os << std::string(m_indent, ' ') << boost::replace_all_copy(tu.p_name.get(), "_", " ") << std::endl;
+		os << string(m_indent, ' ') << boost::replace_all_copy(tu.p_name.get(), "_", " ") << endl;
+
 		// увеличиваем отступ для вывода имен последующих test unit-ов в виде дерева
 		m_indent += 2;
 	}
 
-	virtual void test_unit_finish(std::ostream &/*os*/, boost::unit_test::test_unit const& /*tu*/, unsigned long /*elapsed*/) override
+
+
+	virtual void test_unit_finish(ostream & /*os*/, boost::unit_test::test_unit const& /*tu*/, unsigned long /*elapsed*/) override
 	{
 		// по окончании test unit-а уменьшаем отступ
 		m_indent -= 2;

@@ -20,7 +20,7 @@ public:
 	//	CRational r(3, 5)
 	//	cout << r.ToDouble(); // Должно вывести 0.6
 	//////////////////////////////////////////////////////////////////////////
-
+	double ToDouble()const;
 
 
 
@@ -41,7 +41,8 @@ public:
 	//  -someRational = someOtherRational;
 	//	+someRational = someOtherRational;
 	//////////////////////////////////////////////////////////////////////////
-
+	CRational const operator-()const;
+	CRational const operator+()const;
 
 
 

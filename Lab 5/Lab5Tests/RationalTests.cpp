@@ -59,10 +59,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	{
 		BOOST_REQUIRE_THROW(CRational(1, 0), std::invalid_argument);
 	}
-
-
-
-
+	
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 1. Реализовать метод ToDouble() согласно заданию
 	// Возвращает отношение числителя и знаменателя в виде числа double
@@ -70,7 +67,12 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	CRational r(3, 5)
 	//	cout << r.ToDouble(); // Должно вывести 0.6
 	//////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(can_be_converted_to_double)
+	{
+		BOOST_CHECK_EQUAL(CRational(3, 5).ToDouble(), 0.6);
+		BOOST_CHECK_EQUAL(CRational(5, 2).ToDouble(), 2.5);
+		BOOST_CHECK_EQUAL(CRational(-3, 5).ToDouble(), -0.6);
+	}
 
 
 
@@ -91,9 +93,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//  -someRational = someOtherRational;
 	//	+someRational = someOtherRational;
 	//////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_CASE(has_unary_operator_plus)
+	{
+		VerifyRational(+CRational(6, 8), 3, 4);
+		VerifyRational(+CRational(-6, 8), -3, 4);
+		VerifyRational(+CRational(-6, -8), 3, 4);
+	}
 
-
-
+	BOOST_AUTO_TEST_CASE(has_unary_operator_minus)
+	{
+		VerifyRational(-CRational(6, 8), -3, 4);
+		VerifyRational(-CRational(-6, 8), 3, 4);
+		VerifyRational(-CRational(-6, -8), -3, 4);
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 3. Реализовать бинарный +
