@@ -144,7 +144,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	(1/2) - 1     = (-1/2)
 	//	1 - (1/2)     = (1/2)
 	//////////////////////////////////////////////////////////////////////////
-
 	BOOST_AUTO_TEST_CASE(has_binary_minus_operator)
 	{
 		CRational fraction = CRational(1, 2) - CRational(1, 6);
@@ -163,17 +162,23 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	(1/2) += (1/6)  → (2/3)
 	//	(1/2) += 1      → (3/2)
 	//////////////////////////////////////////////////////////////////////////
-
-
-
-
+	BOOST_AUTO_TEST_CASE(has_plus_assign_operator)
+	{
+		VerifyRational(CRational(1, 2) += CRational(1, 6), 2, 3);
+		VerifyRational(CRational(1, 2) += 1, 3, 2);
+	}
+	
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 6. Реализовать оператор -=
 	// Выполняет уменьшение рационального числа на величину второго рационального либо целого числа :
 	// (1/2) -= (1/6)  → (1/3)
 	// (1/2) -= 1      → (-1/2)
 	//////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(has_minus_assign_operator)
+	{
+		VerifyRational(CRational(1, 2) -= CRational(1, 6), 1, 3);
+		VerifyRational(CRational(1, 2) -= 1, -1, 2);
+	}
 
 
 
@@ -188,17 +193,13 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_CASE(has_binary_multiply_operator)
 	{
 		CRational fraction = CRational(1, 2) * CRational(2, 3);
-		std::cout << fraction.GetNumerator() << "/" << fraction.GetDenominator() << std::endl;
 		VerifyRational(fraction, 1, 3);
 		fraction = CRational(1, 2) * CRational(-3);
 		VerifyRational(fraction, -3, 2);
 		fraction = CRational(7) * CRational(2, 3);
 		VerifyRational(fraction, 14, 3);
 	}
-
-
-
-
+	
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 8. Реализовать оператор /
 	// Возвращает частное двух рациональных чисел, 
@@ -210,16 +211,12 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	BOOST_AUTO_TEST_CASE(has_binary_division_operator)
 	{
 		CRational fraction = CRational(1, 2) / CRational(2, 3);
-		std::cout << fraction.GetNumerator() << "/" << fraction.GetDenominator() << std::endl;
 		VerifyRational(fraction, 3, 4);
 		fraction = CRational(1, 2) / CRational(5);
 		VerifyRational(fraction, 1, 10);
 		fraction = CRational(7) / CRational(2, 3);
 		VerifyRational(fraction, 21, 2);
 	}
-
-
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 9. Реализовать оператор *=
@@ -228,7 +225,11 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	(1/2) *= (2/3) → (1/3)
 	//	(1/2) *= 3     → (3/2)
 	//////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(has_multiply_assign_operator)
+	{
+		VerifyRational(CRational(1, 2) *= CRational(2, 3), 1, 3);
+		VerifyRational(CRational(1, 2) *= 3, 3, 2);
+	}
 
 
 
@@ -241,7 +242,13 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	(3/4) /= (3/8) → (2/1)
 	//	(1/2) /= 3     → (1/6)
 	//////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(has_division_assign_operator)
+	{
+		VerifyRational(CRational(1, 2) /= CRational(2, 3), 3, 4);
+		//std::cout << fraction.GetNumerator() << "/" << fraction.GetDenominator() << std::endl;
+		VerifyRational(CRational(3, 4) /= CRational(3, 8), 2, 1);
+		VerifyRational(CRational(1, 2) /= 3, 1, 6);
+	}
 
 
 

@@ -61,8 +61,6 @@ double CRational::ToDouble()const
 	return static_cast<double>(m_numerator) / m_denominator;
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 2. Реализовать унарный + и унарный -
 //////////////////////////////////////////////////////////////////////////
@@ -76,10 +74,6 @@ CRational const CRational::operator+()const
 	return *this;
 }
 
-
-
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 3. Реализовать бинарный +
 //////////////////////////////////////////////////////////////////////////
@@ -91,8 +85,6 @@ CRational const operator+(const CRational & leftFraction, const CRational & righ
 	return CRational(newNumerator, newDenominator);
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 4. Реализовать бинарный -
 //////////////////////////////////////////////////////////////////////////
@@ -101,21 +93,23 @@ CRational const operator-(const CRational & leftFraction, const CRational & righ
 	return leftFraction + (-rightFraction);
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 5. Реализовать оператор +=
 //////////////////////////////////////////////////////////////////////////
-
-
-
+CRational & CRational::operator+=(const CRational & rightFraction)
+{
+	*this = *this + rightFraction;
+	return *this;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 6. Реализовать оператор -=
 //////////////////////////////////////////////////////////////////////////
-
-
-
+CRational & CRational::operator-=(const CRational & rightFraction)
+{
+	*this = *this - rightFraction;
+	return *this;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 7. Реализовать оператор *
@@ -127,8 +121,6 @@ CRational const operator*(const CRational & leftFraction, const CRational & righ
 	return CRational(newNumerator, newDenominator);
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
 //////////////////////////////////////////////////////////////////////////
@@ -139,19 +131,33 @@ CRational const operator/(const CRational & leftFraction, const CRational & righ
 	return CRational(newNumerator, newDenominator);
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 9. Реализовать оператор *=
 //////////////////////////////////////////////////////////////////////////
-
+CRational & CRational::operator *=(const CRational & rightFraction)
+{
+	m_numerator *= rightFraction.GetNumerator();
+	m_denominator *= rightFraction.GetDenominator();
+	Normalize();
+	return *this;
+}
 
 
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
 //////////////////////////////////////////////////////////////////////////
-
+CRational & CRational::operator/=(const CRational & rhs)
+{
+	if (rhs.GetNumerator() == 0)
+	{
+		throw std::invalid_argument("Denominator must not be equal to zero");
+	}
+	m_numerator *= rhs.GetDenominator();
+	m_denominator *= rhs.GetNumerator();
+	Normalize();
+	return *this;
+}
 
 
 
