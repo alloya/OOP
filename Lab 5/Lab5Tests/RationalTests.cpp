@@ -1,7 +1,7 @@
 ﻿#include "stdafx.h"
 #include "../Rational.h"
 
-BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
+BOOST_AUTO_TEST_CASE(Test_Greatest_Common_Denominator)
 {
 	BOOST_CHECK_EQUAL(GCD(2, 3), 1u);
 	BOOST_CHECK_EQUAL(GCD(3, 2), 1u);
@@ -11,7 +11,12 @@ BOOST_AUTO_TEST_CASE(Test_Greates_Common_Denominator)
 	BOOST_CHECK_EQUAL(GCD(2, 0), 2u);
 	BOOST_CHECK_EQUAL(GCD(0, 0), 1u);
 }
-
+BOOST_AUTO_TEST_CASE(Test_Minimal_Common_Denominator)
+{
+	BOOST_CHECK_EQUAL(MCD(2, 3), 6u);
+	BOOST_CHECK_EQUAL(MCD(1, 3), 3u);
+	BOOST_CHECK_EQUAL(MCD(2, 6), 6u);
+}
 
 
 /*
@@ -93,14 +98,14 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//  -someRational = someOtherRational;
 	//	+someRational = someOtherRational;
 	//////////////////////////////////////////////////////////////////////////
-	BOOST_AUTO_TEST_CASE(has_unary_operator_plus)
+	BOOST_AUTO_TEST_CASE(has_unary_plus_operator)
 	{
 		VerifyRational(+CRational(6, 8), 3, 4);
 		VerifyRational(+CRational(-6, 8), -3, 4);
 		VerifyRational(+CRational(-6, -8), 3, 4);
 	}
 
-	BOOST_AUTO_TEST_CASE(has_unary_operator_minus)
+	BOOST_AUTO_TEST_CASE(has_unary_minus_operator)
 	{
 		VerifyRational(-CRational(6, 8), -3, 4);
 		VerifyRational(-CRational(-6, 8), 3, 4);
@@ -116,7 +121,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	1 + (1/2)     = (3/2)
 	//////////////////////////////////////////////////////////////////////////
 
-
+	BOOST_AUTO_TEST_CASE(has_binary_plus_operator)
+	{
+		CRational fraction = CRational(1, 2) + CRational(1, 3);
+		VerifyRational(fraction, 5, 6);
+		fraction = CRational(-1, 2) + CRational(1, 3);
+		VerifyRational(fraction, -1, 6);
+		fraction = CRational(1, 2) + CRational(1, 6);
+		VerifyRational(fraction, 2, 3);
+		fraction = CRational(1, 2) + CRational(1);
+		VerifyRational(fraction, 3, 2);
+		fraction = CRational(1) + CRational(1, 2) + CRational(1, 6);
+		VerifyRational(fraction, 5, 3);
+	}
 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -128,7 +145,15 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	1 - (1/2)     = (1/2)
 	//////////////////////////////////////////////////////////////////////////
 
-
+	BOOST_AUTO_TEST_CASE(has_binary_minus_operator)
+	{
+		CRational fraction = CRational(1, 2) - CRational(1, 6);
+		VerifyRational(fraction, 1, 3);
+		fraction = CRational(1, 2) - CRational(1);
+		VerifyRational(fraction, -1, 2);
+		fraction = CRational(1) - CRational(1, 2) - CRational(1, 4);
+		VerifyRational(fraction, 1, 4);
+	}
 
 
 	//////////////////////////////////////////////////////////////////////////
@@ -160,7 +185,16 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	(1/2) * (-3)  = (-3/2)
 	//	7 * (2/3)     = (14/3)
 	//////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(has_binary_multiply_operator)
+	{
+		CRational fraction = CRational(1, 2) * CRational(2, 3);
+		std::cout << fraction.GetNumerator() << "/" << fraction.GetDenominator() << std::endl;
+		VerifyRational(fraction, 1, 3);
+		fraction = CRational(1, 2) * CRational(-3);
+		VerifyRational(fraction, -3, 2);
+		fraction = CRational(7) * CRational(2, 3);
+		VerifyRational(fraction, 14, 3);
+	}
 
 
 
@@ -173,7 +207,16 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	(1/2) ⁄ 5     = (1/10)
 	//	7 ⁄ (2/3)     = (21/2)
 	//////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(has_binary_division_operator)
+	{
+		CRational fraction = CRational(1, 2) / CRational(2, 3);
+		std::cout << fraction.GetNumerator() << "/" << fraction.GetDenominator() << std::endl;
+		VerifyRational(fraction, 3, 4);
+		fraction = CRational(1, 2) / CRational(5);
+		VerifyRational(fraction, 1, 10);
+		fraction = CRational(7) / CRational(2, 3);
+		VerifyRational(fraction, 21, 2);
+	}
 
 
 

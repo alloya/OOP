@@ -47,6 +47,12 @@ unsigned GCD(unsigned a, unsigned b)
 	return (a != 0) ? a : 1;
 }
 
+unsigned MCD(unsigned a, unsigned b)
+{
+	return a / GCD(a, b) * b;
+}
+
+
 //////////////////////////////////////////////////////////////////////////
 // TODO: 1. Реализовать метод ToDouble() согласно заданию
 //////////////////////////////////////////////////////////////////////////
@@ -73,17 +79,27 @@ CRational const CRational::operator+()const
 
 
 
+
 //////////////////////////////////////////////////////////////////////////
 // TODO: 3. Реализовать бинарный +
 //////////////////////////////////////////////////////////////////////////
-
+CRational const operator+(const CRational & leftFraction, const CRational & rightFraction)
+{
+	int newDenominator = MCD(leftFraction.GetDenominator(), rightFraction.GetDenominator());
+	int newNumerator = (leftFraction.GetNumerator()*newDenominator/leftFraction.GetDenominator() 
+		+ rightFraction.GetNumerator()*newDenominator/rightFraction.GetDenominator());
+	return CRational(newNumerator, newDenominator);
+}
 
 
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 4. Реализовать бинарный -
 //////////////////////////////////////////////////////////////////////////
-
+CRational const operator-(const CRational & leftFraction, const CRational & rightFraction)
+{
+	return leftFraction + (-rightFraction);
+}
 
 
 
@@ -104,14 +120,24 @@ CRational const CRational::operator+()const
 //////////////////////////////////////////////////////////////////////////
 // TODO: 7. Реализовать оператор *
 //////////////////////////////////////////////////////////////////////////
-
+CRational const operator*(const CRational & leftFraction, const CRational & rightFraction)
+{
+	int newNumerator = leftFraction.GetNumerator()*rightFraction.GetNumerator();
+	int newDenominator = leftFraction.GetDenominator()*rightFraction.GetDenominator();
+	return CRational(newNumerator, newDenominator);
+}
 
 
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 8. Реализовать оператор /
 //////////////////////////////////////////////////////////////////////////
-
+CRational const operator/(const CRational & leftFraction, const CRational & rightFraction)
+{
+	int newNumerator = leftFraction.GetNumerator()*rightFraction.GetDenominator();
+	int newDenominator = leftFraction.GetDenominator()*rightFraction.GetNumerator();
+	return CRational(newNumerator, newDenominator);
+}
 
 
 
