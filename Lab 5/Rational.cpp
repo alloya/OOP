@@ -142,8 +142,6 @@ CRational & CRational::operator *=(const CRational & rightFraction)
 	return *this;
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 10. Реализовать оператор /=
 //////////////////////////////////////////////////////////////////////////
@@ -159,31 +157,69 @@ CRational & CRational::operator/=(const CRational & rhs)
 	return *this;
 }
 
-
-
 //////////////////////////////////////////////////////////////////////////
 // TODO: 11. Реализовать операторы == и !=
 //////////////////////////////////////////////////////////////////////////
 
+bool const operator==(const CRational & leftFraction, const CRational & rightFraction)
+{
+	return (leftFraction.GetNumerator() == rightFraction.GetNumerator()
+		&& leftFraction.GetDenominator() == rightFraction.GetDenominator());
+}
 
+bool const operator!=(const CRational & leftFraction, const CRational & rightFraction)
+{
+	return !(leftFraction == rightFraction);
+}
 
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 12. Реализовать операторы <, >, <=, >=
 //////////////////////////////////////////////////////////////////////////
+bool const operator<(const CRational & leftFraction, const CRational & rightFraction)
+{
+	return leftFraction.ToDouble() < rightFraction.ToDouble();
+}
 
+bool const operator>(const CRational & leftFraction, const CRational & rightFraction)
+{
+	return leftFraction.ToDouble() > rightFraction.ToDouble();
+}
 
+bool const operator<=(const CRational & leftFraction, const CRational & rightFraction)
+{
+	return !(leftFraction > rightFraction);
+}
 
+bool const operator>=(const CRational & leftFraction, const CRational & rightFraction)
+{
+	return !(leftFraction < rightFraction);
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 13. Реализовать оператор вывода рационального числа в выходной поток 
 //////////////////////////////////////////////////////////////////////////
-
-
-
-
+std::ostream & operator<<(std::ostream & strm, const CRational & fraction)
+{
+	strm << fraction.GetNumerator() << '/' << fraction.GetDenominator();
+	return strm;
+}
 
 //////////////////////////////////////////////////////////////////////////
 // TODO: 14. Реализовать оператор ввода рационального числа из входного потока 
 //////////////////////////////////////////////////////////////////////////
+std::istream & operator >> (std::istream & stream, CRational & fraction)
+{
+	int numerator;
+	int denominator;
+	if ((stream >> numerator) && (stream.get() == '/') && (stream >> denominator))
+	{
+		fraction = CRational(numerator, denominator);
+	}
+	else
+	{
+		stream.setstate(std::ios_base::failbit | stream.rdstate());
+	}
+	return stream;
+}
 

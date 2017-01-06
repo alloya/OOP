@@ -135,7 +135,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(fraction, 5, 3);
 	}
 
-
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 4. Реализовать бинарный -
 	// Возвращает разность двух рациональных чисел, 
@@ -153,8 +152,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		fraction = CRational(1) - CRational(1, 2) - CRational(1, 4);
 		VerifyRational(fraction, 1, 4);
 	}
-
-
+	
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 5. Реализовать оператор +=
 	// Выполняет увеличение рационального числа на величину второго рационального,
@@ -179,9 +177,7 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 2) -= CRational(1, 6), 1, 3);
 		VerifyRational(CRational(1, 2) -= 1, -1, 2);
 	}
-
-
-
+	
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 7. Реализовать оператор *
 	// Возвращает результат произведения рациональных чисел, 
@@ -231,9 +227,6 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(CRational(1, 2) *= 3, 3, 2);
 	}
 
-
-
-
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 10. Реализовать оператор /=
 	// Делит первое рациональное число на другое рациональное, 
@@ -244,13 +237,11 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//////////////////////////////////////////////////////////////////////////
 	BOOST_AUTO_TEST_CASE(has_division_assign_operator)
 	{
+		BOOST_REQUIRE_THROW(CRational(1, 2) /= CRational(0, 1), std::invalid_argument);
 		VerifyRational(CRational(1, 2) /= CRational(2, 3), 3, 4);
-		//std::cout << fraction.GetNumerator() << "/" << fraction.GetDenominator() << std::endl;
 		VerifyRational(CRational(3, 4) /= CRational(3, 8), 2, 1);
 		VerifyRational(CRational(1, 2) /= 3, 1, 6);
 	}
-
-
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 11. Реализовать операторы == и !=
@@ -263,9 +254,15 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	(1/2) != 7     → true
 	//	3 != (2/3)     → true
 	//////////////////////////////////////////////////////////////////////////
-
-
-
+	BOOST_AUTO_TEST_CASE(can_be_compared_for_equality)
+	{
+		BOOST_CHECK(CRational(1, 2) == CRational(1, 2));
+		BOOST_CHECK(CRational(4, 1) == 4);
+		BOOST_CHECK(3 == CRational(3, 1));
+		BOOST_CHECK(!(CRational(1, 2) == CRational(2, 3)));
+		BOOST_CHECK(!(CRational(1, 2) == 7));
+		BOOST_CHECK(!(3 == CRational(2, 3)));
+	}
 
 	//////////////////////////////////////////////////////////////////////////
 	// TODO: 12. Реализовать операторы <, >, <=, >=
@@ -278,6 +275,50 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	3 <= (7/2)     → true
 	//	3 >= (8/2)     → false
 	//////////////////////////////////////////////////////////////////////////
+	BOOST_AUTO_TEST_SUITE(has_comparison_operators)
+		BOOST_AUTO_TEST_CASE(less_than)
+		{
+			BOOST_CHECK(CRational(1, 2) < 7);
+			BOOST_CHECK(0 < CRational(1, 2));
+			BOOST_CHECK(!(CRational(1, 2) < 0));
+			BOOST_CHECK(!(CRational(1, 2) < CRational(1, 2)));
+			BOOST_CHECK(CRational(-1, 2) < CRational(1, 2));
+		}
+
+		BOOST_AUTO_TEST_CASE(greater_than)
+		{
+			BOOST_CHECK(CRational(3, 1) > 2);
+			BOOST_CHECK(CRational(3, 1) > 0);
+			BOOST_CHECK(0 > CRational(-1, 2));
+			BOOST_CHECK(!(CRational(-1, 2) > 0));
+			BOOST_CHECK(CRational(1, 2) > CRational(-1, 2));
+			BOOST_CHECK(!(CRational(1, 2) > CRational(1, 2)));
+			BOOST_CHECK(!(CRational(1, 3) > CRational(1, 2)));
+			BOOST_CHECK(!(CRational(-6, 2) > CRational(-2, 1)));
+		}
+
+		BOOST_AUTO_TEST_CASE(less_than_or_equal)
+		{
+			BOOST_CHECK(3 <= CRational(7, 2));
+			BOOST_CHECK(!(CRational(1, 2) <= CRational(1, 3)));
+			BOOST_CHECK(CRational(7, 2) <= CRational(7, 2));
+			BOOST_CHECK(CRational(7, 3) <= CRational(7, 2));
+			BOOST_CHECK(CRational(1, 2) <= 1);
+			BOOST_CHECK(0 <= CRational(1, 2));
+			BOOST_CHECK(CRational(-1, 2) <= CRational(-1, 3));
+		}
+
+		BOOST_AUTO_TEST_CASE(greater_than_or_equal)
+		{
+			BOOST_CHECK(CRational(1, 2) >= CRational(1, 3));
+			BOOST_CHECK(!(3 >= CRational(8, 2)));
+			BOOST_CHECK(CRational(1, 2) >= CRational(1, 3));
+			BOOST_CHECK(CRational(7, 2) >= CRational(7, 2));
+			BOOST_CHECK(CRational(1, 2) >= 0);
+			BOOST_CHECK(1 >= CRational(1, 2));
+			BOOST_CHECK(CRational(-1, 3) >= CRational(-1, 2));
+		}
+	BOOST_AUTO_TEST_SUITE_END()
 
 
 
@@ -287,7 +328,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	std::ostream в формате <числитель>/<знаменатель>, 
 	//	например: 7/15
 	//////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(can_be_printed_to_ostream)
+	{
+		{
+			std::ostringstream output;
+			output << CRational(7, 15);
+			BOOST_CHECK_EQUAL(output.str(), "7/15");
+		}
+		{
+			std::ostringstream output;
+			output << CRational(3);
+			BOOST_CHECK_EQUAL(output.str(), "3/1");
+		}
+	}
 
 
 
@@ -296,7 +349,20 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//	std::istream в формате <числитель>/<знаменатель>, 
 	//	например: 7/15
 	//////////////////////////////////////////////////////////////////////////
-
+	BOOST_AUTO_TEST_CASE(can_be_read_from_istream)
+	{
+		CRational testRational;
+		std::stringstream stream("7/15");
+		stream >> testRational;
+		BOOST_CHECK_EQUAL(testRational.GetDenominator(), 15);
+		BOOST_CHECK_EQUAL(testRational.GetNumerator(), 7);
+		stream.clear();
+		stream.str("7");
+		//BOOST_CHECK_THROW(stream >> testRational, invalid_argument);
+		stream.clear();
+		stream.str("7s/5");
+		//BOOST_CHECK_THROW(stream >> testRational, runtime_error);
+	}
 
 
 BOOST_AUTO_TEST_SUITE_END()
