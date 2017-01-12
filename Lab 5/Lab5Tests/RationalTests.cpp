@@ -133,6 +133,10 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(fraction, 3, 2);
 		fraction = CRational(1) + CRational(1, 2) + CRational(1, 6);
 		VerifyRational(fraction, 5, 3);
+		fraction = CRational(1, 2) + 1;
+		VerifyRational(fraction, 3, 2);
+		fraction = 1 + CRational(1, 2);
+		VerifyRational(fraction, 3, 2);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -198,6 +202,10 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(fraction, -3, 2);
 		fraction = CRational(7) * CRational(2, 3);
 		VerifyRational(fraction, 14, 3);
+		fraction = CRational(2, 3) * 2;
+		VerifyRational(fraction, 4, 3);
+		fraction = 2 * CRational(2, 3);
+		VerifyRational(fraction, 4, 3);
 	}
 	
 	//////////////////////////////////////////////////////////////////////////
@@ -216,6 +224,10 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(fraction, 1, 10);
 		fraction = CRational(7) / CRational(2, 3);
 		VerifyRational(fraction, 21, 2);
+		fraction = 7 / CRational(2, 3);
+		VerifyRational(fraction, 21, 2);
+		fraction = CRational(1, 2) / 5;
+		VerifyRational(fraction, 1, 10);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -263,9 +275,10 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		BOOST_CHECK(CRational(1, 2) == CRational(1, 2));
 		BOOST_CHECK(CRational(4, 1) == 4);
 		BOOST_CHECK(3 == CRational(3, 1));
-		BOOST_CHECK(!(CRational(1, 2) == CRational(2, 3)));
-		BOOST_CHECK(!(CRational(1, 2) == 7));
-		BOOST_CHECK(!(3 == CRational(2, 3)));
+		BOOST_CHECK_EQUAL((CRational(1, 2) != CRational(2, 3)), true);
+		BOOST_CHECK_EQUAL((CRational(1, 2) == 7), false);
+		BOOST_CHECK_EQUAL((3 == CRational(9, 3)), true);
+		BOOST_CHECK_EQUAL((CRational(2, 2) != 1), false);
 	}
 
 	//////////////////////////////////////////////////////////////////////////
@@ -355,17 +368,19 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 	//////////////////////////////////////////////////////////////////////////
 	BOOST_AUTO_TEST_CASE(can_be_read_from_istream)
 	{
-		CRational testRational;
+		CRational fraction;
 		std::stringstream stream("7/15");
-		stream >> testRational;
-		BOOST_CHECK_EQUAL(testRational.GetDenominator(), 15);
-		BOOST_CHECK_EQUAL(testRational.GetNumerator(), 7);
-		stream.clear();
+		stream >> fraction;
+		BOOST_CHECK_EQUAL(fraction.GetDenominator(), 15);
+		BOOST_CHECK_EQUAL(fraction.GetNumerator(), 7);
+		stream.clear(stream.goodbit);
 		stream.str("7");
-		//BOOST_CHECK_THROW(stream >> testRational, invalid_argument);
-		stream.clear();
+		stream >> fraction;
+		BOOST_CHECK_EQUAL(stream.fail(), true);
+		stream.clear(stream.goodbit);
 		stream.str("7s/5");
-		//BOOST_CHECK_THROW(stream >> testRational, runtime_error);
+		stream >> fraction;
+		BOOST_CHECK_EQUAL(stream.fail(), true);
 	}
 
 

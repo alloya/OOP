@@ -218,7 +218,7 @@ std::istream & operator >> (std::istream & stream, CRational & fraction)
 	}
 	else
 	{
-		stream.setstate(std::ios_base::failbit | stream.rdstate());
+		stream.setstate(std::ios_base::failbit);
 	}
 	return stream;
 }
