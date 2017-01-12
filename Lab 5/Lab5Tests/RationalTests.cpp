@@ -11,7 +11,7 @@ BOOST_AUTO_TEST_CASE(Test_Greatest_Common_Denominator)
 	BOOST_CHECK_EQUAL(GCD(2, 0), 2u);
 	BOOST_CHECK_EQUAL(GCD(0, 0), 1u);
 }
-BOOST_AUTO_TEST_CASE(Test_Minimal_Common_Denominator)
+BOOST_AUTO_TEST_CASE(Test_Minimal_Common_Divisible)
 {
 	BOOST_CHECK_EQUAL(MCD(2, 3), 6u);
 	BOOST_CHECK_EQUAL(MCD(1, 3), 3u);
