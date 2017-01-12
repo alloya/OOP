@@ -149,8 +149,12 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		VerifyRational(fraction, 1, 3);
 		fraction = CRational(1, 2) - CRational(1);
 		VerifyRational(fraction, -1, 2);
-		fraction = CRational(1) - CRational(1, 2) - CRational(1, 4);
-		VerifyRational(fraction, 1, 4);
+		fraction = CRational(1) - CRational(1, 2) - CRational(-1, 4);
+		VerifyRational(fraction, 3, 4);
+		fraction = CRational(1, 2) - 1;
+		VerifyRational(fraction, -1, 2);
+		fraction = 1 - CRational(1, 2);
+		VerifyRational(fraction, 1, 2);
 	}
 	
 	//////////////////////////////////////////////////////////////////////////
