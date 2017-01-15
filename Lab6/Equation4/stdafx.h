@@ -11,6 +11,8 @@
 #include <tchar.h>
 #include <iostream>
 #include <vector>
-
+#define _USE_MATH_DEFINES
+#include <cmath>
+#include <array>
 
 // TODO: reference additional headers your program requires here

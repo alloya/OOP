@@ -6,36 +6,24 @@
 
 using namespace std;
 
-void ReadCoefficients(vector <double> &coefficients)
+void ReadCoefficients(vector<double> &coefficients)
 {
-	/*size_t i = 0;
-	double value;
-	while (std::cin >> value)
-	{
-		if (i < 5)
-		{
-			coefficients[i] = value;
-			++i;
-		}
-	}*/
+	cout << "Enter coefficients: ";
 	for (size_t i = 0; i < 5; ++i)
 	{
 		cin >> coefficients[i];
 	}
+	cout << endl;
 }
 
 
 int main()
 {
-	vector <double> coefficients = { 0, 0, 0, 0, 0 };
-	ReadCoefficients(coefficients);
-	for (size_t i = 0; i < 5; ++i)
-	{
-		cout << coefficients[i] << " ";
-	}
+	vector<double> coef = { 0, 0, 0, 0, 0 };
+	ReadCoefficients(coef);
 	try
 	{
-		SolveEquation(coefficients[0], coefficients[1], coefficients[2], coefficients[3], coefficients[4]);
+		Solve4(coef[0], coef[1], coef[2], coef[3], coef[4]);
 	}
 	catch (const exception & ex)
 	{
