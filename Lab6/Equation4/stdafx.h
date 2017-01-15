@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 #define _USE_MATH_DEFINES
-#include <cmath>
+#include <math.h>
 #include <array>
 
 // TODO: reference additional headers your program requires here

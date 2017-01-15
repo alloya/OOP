@@ -23,40 +23,40 @@ EquationRoot2 Solve2(double a, double b, double c)
 	return equation;
 }
 
-double Solve3(double a, double b, double c)
+double Solve3(double a, double b, double c, double d)
 {
 	array<double, 3> roots;
-	double q = (pow(a, 2) - 3.0 * b) / 9.0;
-	double r = (2.0 * pow(a, 3) - 9.0 * a * b + 27.0 * c) / 54.0;
-	double s = pow(q, 3) - pow(r, 2);
-	if (s > 0)
+	double p = (3.0 * pow(a, 2) * c - pow(b, 2)) / (3.0 * pow(a, 2));
+	double q = (2.0 * pow(a, 3) - 9.0 * a * b * c + 27.0 * d * pow(a, 2)) / (27.0 * pow(a, 3));
+	double Q = pow(p / 3, 3) + pow(q / 2, 2);
+	if (Q > 0)
 	{
-		double t = acos(r / sqrt(pow(q, 3))) / 3.0;
-		roots[0] = -2 * sqrt(q) * cos(t) - a / 3.0;
-		roots[1] = -2 * sqrt(q) * cos(t + 2 * M_PI / 3.0) - a / 3.0;
-		roots[2] = -2 * sqrt(q) * cos(t - 2 * M_PI / 3.0) - a / 3.0;
+		double t = acos(q / sqrt(pow(p, 3))) / 3.0;
+		roots[0] = -2 * sqrt(p) * cos(t) - a / 3.0;
+		roots[1] = -2 * sqrt(p) * cos(t + 2 * M_PI / 3.0) - a / 3.0;
+		roots[2] = -2 * sqrt(p) * cos(t - 2 * M_PI / 3.0) - a / 3.0;
 	}
-	else if (s < 0)
+	else if (Q < 0)
 	{
-		if (q > 0)
+		if (p > 0)
 		{
-			double t = acosh(abs(r) / sqrt(pow(q, 3))) / 3.0;
-			roots[0] = -2 * ((r > 0) ? 1 : ((r < 0) ? -1 : 0)) * sqrt(q) * cosh(t) - a / 3.0;
+			double t = acosh(abs(q) / sqrt(pow(p, 3))) / 3.0;
+			roots[0] = -2 * ((q > 0) ? 1 : ((q < 0) ? -1 : 0)) * sqrt(p) * cosh(t) - a / 3.0;
 		}
-		if (q < 0)
+		if (p < 0)
 		{
-			double t = asinh(abs(r) / sqrt(pow(abs(q), 3))) / 3.0;
-			roots[0] = -2 * ((r > 0) ? 1 : ((r < 0) ? -1 : 0)) * sqrt(abs(q)) * sinh(t) - a / 3.0;
+			double t = asinh(abs(q) / sqrt(pow(abs(p), 3))) / 3.0;
+			roots[0] = -2 * ((q > 0) ? 1 : ((q < 0) ? -1 : 0)) * sqrt(abs(p)) * sinh(t) - a / 3.0;
 		}
-		if (q == 0)
+		if (p == 0)
 		{
 			roots[0] = -pow((c - pow(a, 3) / 27), 1 / 3.0) - a / 3.0;
 		}
 	}
 	else
 	{
-		roots[0] = -2 * ((r > 0) ? 1 : ((r < 0) ? -1 : 0)) * sqrt(q) - a / 3.0;
-		roots[1] = ((r > 0) ? 1 : ((r < 0) ? -1 : 0)) * sqrt(q) - a / 3.0;
+		roots[0] = -2 * ((q > 0) ? 1 : ((q < 0) ? -1 : 0)) * sqrt(p) - a / 3.0;
+		roots[1] = ((q > 0) ? 1 : ((q < 0) ? -1 : 0)) * sqrt(p) - a / 3.0;
 	}
 	return *max_element(roots.begin(), roots.end());
 }
