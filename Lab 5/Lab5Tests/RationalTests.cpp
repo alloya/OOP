@@ -373,14 +373,15 @@ BOOST_AUTO_TEST_SUITE(Rational_number)
 		stream >> fraction;
 		BOOST_CHECK_EQUAL(fraction.GetDenominator(), 15);
 		BOOST_CHECK_EQUAL(fraction.GetNumerator(), 7);
-		stream.clear(stream.goodbit);
-		stream.str("7");
+	}
+
+	BOOST_AUTO_TEST_CASE(can_read_incorrect_data_from_istream)
+	{
+		CRational fraction;
+		std::stringstream stream("7s/5");
 		stream >> fraction;
 		BOOST_CHECK_EQUAL(stream.fail(), true);
-		stream.clear(stream.goodbit);
-		stream.str("7s/5");
-		stream >> fraction;
-		BOOST_CHECK_EQUAL(stream.fail(), true);
+		BOOST_CHECK_EQUAL(stream.str(), "7s/5");
 	}
 
 
