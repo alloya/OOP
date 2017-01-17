@@ -19,11 +19,11 @@ void ReadCoefficients(vector<double> &coefficients)
 
 int main()
 {
-	vector<double> coef = { 0, 0, 0, 0, 0 };
+	vector<double> coef = { 0, 0, 0, 0 };
 	ReadCoefficients(coef);
 	try
 	{
-		Solve4(coef[0], coef[1], coef[2], coef[3], coef[4]);
+		Solve3(coef[0], coef[1], coef[2], coef[3]);
 	}
 	catch (const exception & ex)
 	{

@@ -32,7 +32,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Equation4.cpp">
+    <ClCompile Include="Equation3.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EquationProcessor.cpp">
