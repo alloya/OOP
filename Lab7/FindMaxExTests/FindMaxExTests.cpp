@@ -43,24 +43,24 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function_works_correct_when)
 		{
 			float maxValue = 0.0f;
 			std::vector<float> arr;
-			BOOST_CHECK(!FindMaxEx(arr, maxValue));
+			FindMaxEx(arr, maxValue);
 			BOOST_CHECK(maxValue == 0.0f);
 		}
 
 		{
 			std::string maxValue = "";
 			std::vector<std::string> arr;
-			BOOST_CHECK(!FindMaxEx(arr, maxValue));
+			FindMaxEx(arr, maxValue);
 			BOOST_CHECK(maxValue == "");
 		}
 
 		{
 			Athlete athlete = { "Vladimir Putin", 177, 75 };
 			std::vector<Athlete> arr;
-			BOOST_CHECK(!FindMaxEx(arr, athlete, IsHeightLess));
+			FindMaxEx(arr, athlete, IsHeightLess);
 			BOOST_CHECK(AreEqual(athlete, { "Vladimir Putin", 177, 75 }));
 
-			BOOST_CHECK(!FindMaxEx(arr, athlete, IsWeightLess));
+			FindMaxEx(arr, athlete, IsWeightLess);
 			BOOST_CHECK(AreEqual(athlete, { "Vladimir Putin", 177, 75 }));
 		}
 	}
@@ -77,24 +77,24 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function_works_correct_when)
 		{
 			float maxValue = 0.0f;
 			std::vector<float> arr = { 3.33f };
-			BOOST_CHECK(FindMaxEx(arr, maxValue));
+			FindMaxEx(arr, maxValue);
 			BOOST_CHECK(maxValue == 3.33f);
 		}
 
 		{
 			std::string maxValue = "";
 			std::vector<std::string> arr = { "hello world" };
-			BOOST_CHECK(FindMaxEx(arr, maxValue));
+			FindMaxEx(arr, maxValue);
 			BOOST_CHECK(maxValue == "hello world");
 		}
 
 		{
 			Athlete athlete = { "Vladimir Putin", 177, 75 };
 			std::vector<Athlete> arr = { athlete };
-			BOOST_CHECK(FindMaxEx(arr, athlete, IsHeightLess));
+			FindMaxEx(arr, athlete, IsHeightLess);
 			BOOST_CHECK(AreEqual(athlete, { "Vladimir Putin", 177, 75 }));
 
-			BOOST_CHECK(FindMaxEx(arr, athlete, IsWeightLess));
+			FindMaxEx(arr, athlete, IsWeightLess);
 			BOOST_CHECK(AreEqual(athlete, { "Vladimir Putin", 177, 75 }));
 		}
 	}
@@ -111,14 +111,14 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function_works_correct_when)
 		{
 			float maxValue = 0.0f;
 			std::vector<float> arr = { 3.33f, 7.41f, -6.77f, -3.43f };
-			BOOST_CHECK(FindMaxEx(arr, maxValue));
+			FindMaxEx(arr, maxValue);
 			BOOST_CHECK(maxValue == 7.41f);
 		}
 
 		{
 			std::string maxValue = "";
 			std::vector<std::string> arr = { "one", "two", "three", "four" };
-			BOOST_CHECK(FindMaxEx(arr, maxValue));
+			FindMaxEx(arr, maxValue);
 			BOOST_CHECK(maxValue == "two");
 		}
 
@@ -130,11 +130,10 @@ BOOST_AUTO_TEST_SUITE(FindMaxEx_function_works_correct_when)
 			Athlete athlete = Putin;
 			std::vector<Athlete> arr = { Putin, Medvedev, Obama };
 
-
-			BOOST_CHECK(FindMaxEx(arr, athlete, IsHeightLess));
+			FindMaxEx(arr, athlete, IsHeightLess);
 			BOOST_CHECK(AreEqual(athlete, Obama));
 
-			BOOST_CHECK(FindMaxEx(arr, athlete, IsWeightLess));
+			FindMaxEx(arr, athlete, IsWeightLess);
 			BOOST_CHECK(AreEqual(athlete, Obama));
 		}
 	}
