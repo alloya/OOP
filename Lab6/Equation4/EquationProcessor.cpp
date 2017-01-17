@@ -4,6 +4,17 @@ using namespace std;
 
 EquationRoot4 Solve4(double a, double b, double c, double d, double e)
 {
+	double temp = a;
+	a = b / temp;
+	b = c / temp;
+	c = d / temp;
+	d = e / temp;
+	double p = b - 3 * a * a / 8;
+	double q = a * a * a / 8 - a * b / 2 + c;
+	double r = -3 * pow(a, 4) / 246 + a * a * b / 16 - c * a / 4 + d;
+	double cubicResolventa = Solve3(-b, a * c - 4 * d, -a * a + 4 * b * d - c * c);
+	//double A = sqrt(a * a / 4 - b + y);
+	//double B = sqrt(y * y / 4 - d);
 	return EquationRoot4();
 }
 
@@ -13,17 +24,23 @@ EquationRoot2 Solve2(double a, double b, double c)
 	double D = b * b - 4. * a * c;
 	if (D == 0)
 	{
+		equation.numRoots = 1;
 		equation.roots[0] = equation.roots[1] = -b / (2 * a);
 	}
 	else if (D > 0)
 	{
+		equation.numRoots = 2;
 		equation.roots[0] = (-b + sqrt(D)) / (2 * a);
 		equation.roots[1] = (-b - sqrt(D)) / (2 * a);
 	}
+	else if (D < 0) 
+	{
+		equation.numRoots = 0;
+	}
 	return equation;
 }
-
-double Solve3(double a, double b, double c, double d)
+//http://www.resolventa.ru/spr/algebra/ferrary.htm
+double Solve3(double a, double b, double c)
 {
 	array<double, 3> roots;
 	double p = (3.0 * pow(a, 2) * c - pow(b, 2)) / (3.0 * pow(a, 2));
