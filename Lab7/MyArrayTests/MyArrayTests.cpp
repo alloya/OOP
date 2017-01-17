@@ -1,4 +1,3 @@
-
 #include "stdafx.h"
 #include "../MyArray/MyArray.h"
 
@@ -17,11 +16,13 @@ struct EmptyStringArray
 };
 
 BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
+
 	BOOST_AUTO_TEST_SUITE(by_default)
 		BOOST_AUTO_TEST_CASE(is_empty)
 		{
 			BOOST_CHECK_EQUAL(arr.GetSize(), 0u);
 		}
+
 		BOOST_AUTO_TEST_CASE(has_0_capacity)
 		{
 			BOOST_CHECK_EQUAL(arr.GetCapacity(), 0u);
@@ -44,6 +45,7 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 			BOOST_CHECK_EQUAL(arr.GetSize(), 4u);
 			BOOST_CHECK_EQUAL(arr.GetCapacity(), 4u);
 		}
+
 		BOOST_AUTO_TEST_CASE(it_becomes_available_at_the_back)
 		{
 			arr.Append(1);

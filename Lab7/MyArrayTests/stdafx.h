@@ -9,6 +9,8 @@
 
 #include <stdio.h>
 #include <tchar.h>
+#include <new>
+#include <algorithm>
 
 #include <boost/algorithm/string/replace.hpp>
 

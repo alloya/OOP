@@ -1,8 +1,5 @@
 #pragma once
 
-#include <new>
-#include <algorithm>
-
 template <typename T>
 class CMyArray
 {
