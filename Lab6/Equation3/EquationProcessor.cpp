@@ -40,14 +40,17 @@ EquationRoot3 Solve3(double a, double b, double c, double d)
 {
 	EquationRoot3 equation;
 	array<double, 3> roots;
-	double temp = a;
-	a = b / temp;
-	b = c / temp;
-	c = d / temp;
+	cout << a << endl;
+	cout << b << endl;
+	cout << c << endl;
+	cout << d << endl;
 
-	double p = (3 * b - a * a) / 3;
+	double p = (3 * a * c - b * b) / (3 * a * a);
 	cout << p << endl;
+	cout << 2 * b * b - 9 * a * b * c + 27 * a * a * d << endl;
 
+	double q = (2 * b * b - 9 * a * b * c + 27 * a * a * d) / (27 * a * a * a) ;
+	cout << q << endl;
 
 	double Q = (a * a - 3 * b) / 9.;
 	cout << Q << endl;
