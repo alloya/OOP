@@ -6,12 +6,12 @@
 
 using namespace std;
 
-void ReadCoefficients(vector<double> &coefficients)
+void PrintRoots(const EquationRoot4& roots)
 {
-	cout << "Enter coefficients: ";
-	for (size_t i = 0; i < 5; ++i)
+	cout << "Equation roots are: ";
+	for (size_t i = 0; i < roots.numRoots; ++i)
 	{
-		cin >> coefficients[i];
+		cout << roots.roots[i] << "; ";
 	}
 	cout << endl;
 }
@@ -19,17 +19,18 @@ void ReadCoefficients(vector<double> &coefficients)
 
 int main()
 {
-	vector<double> coef = { 0, 0, 0, 0 };
-	ReadCoefficients(coef);
-	try
+	double a, b, c, d, e;
+	while ((cin >> a) && (cin >> b) && (cin >> c) && (cin >> d) && (cin >> e))
 	{
-		Solve3(coef[0], coef[1], coef[2]);
+		try
+		{
+			PrintRoots(Solve4(a, b, c, d, e));
+		}
+		catch (const exception & ex)
+		{
+			cerr << ex.what() << endl;
+		}
 	}
-	catch (const exception & ex)
-	{
-		cerr << ex.what() << endl;
-	}
-
 
 	return EXIT_SUCCESS;
 }
