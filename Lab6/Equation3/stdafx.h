@@ -14,5 +14,6 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <array>
+#include <complex>
 
 // TODO: reference additional headers your program requires here

@@ -23,7 +23,7 @@ int main()
 	ReadCoefficients(coef);
 	try
 	{
-		Solve3(coef[0], coef[1], coef[2], coef[3]);
+		Solve3(coef[0], coef[1], coef[2]);
 	}
 	catch (const exception & ex)
 	{
