@@ -16,7 +16,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 		}
 	BOOST_AUTO_TEST_SUITE_END()
 
-	BOOST_AUTO_TEST_SUITE(after_appeding_a_string)
+	BOOST_AUTO_TEST_SUITE(after_appending_a_string)
 		BOOST_AUTO_TEST_CASE(increases_its_size_by_1)
 		{
 			auto oldSize = list.GetSize();
@@ -41,7 +41,7 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 	BOOST_AUTO_TEST_SUITE_END()
 
 	BOOST_AUTO_TEST_SUITE(iterator)
-		BOOST_AUTO_TEST_CASE(can_be_increnenting)
+		BOOST_AUTO_TEST_CASE(can_be_incremented)
 		{
 			list.Append("first");
 			list.Append("second");
