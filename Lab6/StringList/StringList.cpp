@@ -4,6 +4,11 @@
 
 using namespace std;
 
+CStringList::~CStringList()
+{
+	Clear();
+}
+
 size_t CStringList::GetSize() const
 {
 	return m_size;
@@ -44,6 +49,17 @@ void CStringList::PushFront(const string & data)
 	}
 	m_firstNode = move(newNode);
 	++m_size;
+}
+
+void CStringList::Clear()
+{
+	while (m_lastNode)
+	{
+		m_lastNode->next = nullptr;
+		m_lastNode = m_lastNode->prev;
+	}
+	m_firstNode = nullptr;
+	m_size = 0;
 }
 
 CStringList::CIterator CStringList::begin()

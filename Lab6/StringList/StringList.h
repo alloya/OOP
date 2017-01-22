@@ -17,7 +17,8 @@ class CStringList
 		unique_ptr<Node> next;
 	};
 public:
-	
+	CStringList() = default;
+	~CStringList();
 	class CIterator
 	{
 		friend CStringList;
@@ -34,7 +35,7 @@ public:
 	void Append(const string& data);
 	bool Empty()const;
 	void PushFront(const string &data);
-
+	void Clear();
 	CIterator begin();
 	CIterator end();
 	CIterator const cbegin()const;
