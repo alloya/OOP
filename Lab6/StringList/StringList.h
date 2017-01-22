@@ -17,9 +17,7 @@ class CStringList
 		unique_ptr<Node> next;
 	};
 public:
-	size_t GetSize()const;
-	void Append(const string& data);
-
+	
 	class CIterator
 	{
 		friend CStringList;
@@ -32,6 +30,11 @@ public:
 		Node *m_node = nullptr;
 	};
 
+	size_t GetSize()const;
+	void Append(const string& data);
+	bool Empty()const;
+	void PushFront(const string &data);
+
 	CIterator begin();
 	CIterator end();
 	CIterator const cbegin()const;
@@ -43,7 +46,9 @@ public:
 	CIterator const crend()const;
 
 	string & GetBackElement();
+	string & GetFrontElement();
 	string const& GetBackElement()const;
+	string const& GetFrontElement()const;
 private:
 	size_t m_size = 0;
 	unique_ptr<Node> m_firstNode;

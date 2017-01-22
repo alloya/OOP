@@ -13,9 +13,40 @@ BOOST_FIXTURE_TEST_SUITE(String_list, EmptyStringList)
 		BOOST_AUTO_TEST_CASE(is_empty)
 		{
 			BOOST_CHECK_EQUAL(list.GetSize(), 0u);
+			BOOST_CHECK(list.Empty());
+		}
+
+		BOOST_AUTO_TEST_CASE(can_insert_element_to_begining)
+		{
+			list.PushFront("hello");
+			BOOST_CHECK_EQUAL(list.GetBackElement(), "hello");
+			list.PushFront("goodbye");
+			BOOST_CHECK_EQUAL(list.GetBackElement(), "hello");
 		}
 	BOOST_AUTO_TEST_SUITE_END()
-
+	BOOST_AUTO_TEST_SUITE(after_pushing_front_a_string)
+		BOOST_AUTO_TEST_CASE(increases_its_size_by_1)
+		{
+			auto oldSize = list.GetSize();
+			list.PushFront("hello");
+			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 1);
+			list.PushFront("hello");
+			BOOST_CHECK_EQUAL(list.GetSize(), oldSize + 2);
+		}
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_GetFrontElement_method)
+		{
+			list.PushFront("hello");
+			BOOST_CHECK_EQUAL(list.GetFrontElement(), "hello");
+			list.PushFront("goodbye");
+			BOOST_CHECK_EQUAL(list.GetFrontElement(), "goodbye");
+		}
+		BOOST_AUTO_TEST_CASE(makes_it_accessible_via_iterator_to_first_element)
+		{
+			list.PushFront("hello");
+			auto it = list.begin();
+			BOOST_CHECK_EQUAL(addressof(*it), addressof(list.GetFrontElement()));
+		}
+BOOST_AUTO_TEST_SUITE_END()
 	BOOST_AUTO_TEST_SUITE(after_appending_a_string)
 		BOOST_AUTO_TEST_CASE(increases_its_size_by_1)
 		{
