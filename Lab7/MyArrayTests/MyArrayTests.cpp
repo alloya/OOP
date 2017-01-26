@@ -3,74 +3,99 @@
 
 using namespace std;
 
-struct ArrayItem
+struct Items
 {
-	ArrayItem(int value = 0) : value(value)
+	Items(int value = 0) : value(value)
 	{}
 	int value;
 };
 
-struct EmptyStringArray
+struct EmptyStack
 {
-	CMyArray<ArrayItem> arr;
+	CMyStack<Items> stack;
 };
 
-BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStringArray)
 
-	BOOST_AUTO_TEST_SUITE(by_default)
-		BOOST_AUTO_TEST_CASE(is_empty)
+BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStack)
+	BOOST_AUTO_TEST_CASE(is_empty_by_default)
+	{
+		BOOST_CHECK(stack.IsEmpty());
+	}
+
+	BOOST_AUTO_TEST_CASE(can_push_items)
+	{
+		stack.Push(Items());
+		BOOST_CHECK_EQUAL(stack.GetSize(), 1);
+	}
+
+	/*BOOST_AUTO_TEST_CASE(can_pop_items)
+	{
+		stack.Push(Items());
+		stack.Pop();
+		BOOST_CHECK(stack.IsEmpty());
+	}
+
+	BOOST_AUTO_TEST_CASE(cant_pop_items_when_stack_is_empty)
+	{
+		BOOST_CHECK_THROW(stack.Pop(), std::underflow_error);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_get_stack_top)
+	{
+		stack.Push(15);
+		stack.Push(35);
+		BOOST_CHECK_EQUAL(stack.GetTop().value, 35);
+		BOOST_CHECK_EQUAL(stack.GetSize(), 2);
+	}
+
+	BOOST_AUTO_TEST_CASE(cant_get_stack_top_when_stack_is_empty)
+	{
+		BOOST_CHECK_THROW(stack.GetTop(), std::underflow_error);
+	}
+
+	BOOST_AUTO_TEST_CASE(can_clear_stack)
+	{
+		stack.Push(1);
+		stack.Push(2);
+		stack.Push(3);
+		stack.Clear();
+		BOOST_CHECK(stack.IsEmpty());
+	}
+
+	BOOST_AUTO_TEST_CASE(can_be_copied)
+	{
 		{
-			BOOST_CHECK_EQUAL(arr.GetSize(), 0u);
+			stack.Push(35);
+			CMyStack<Items> stack1(stack);
+			BOOST_CHECK_EQUAL(stack1.GetTop().value, 35);
+			BOOST_CHECK_EQUAL(stack1.GetTop().value, 35);
+			BOOST_CHECK(!stack.IsEmpty());
 		}
 
-		BOOST_AUTO_TEST_CASE(has_0_capacity)
 		{
-			BOOST_CHECK_EQUAL(arr.GetCapacity(), 0u);
+			stack.Push(24);
+			CMyStack<Items> stack1(stack);
+			BOOST_CHECK_EQUAL(stack1.GetTop().value, 24);
+			BOOST_CHECK_EQUAL(stack1.GetTop().value, 24);
+			BOOST_CHECK(!stack.IsEmpty());
 		}
-	BOOST_AUTO_TEST_SUITE_END()
+	}
 
-	BOOST_AUTO_TEST_SUITE(after_appending_an_item)
-		BOOST_AUTO_TEST_CASE(increases_its_size_and_capacity)
+	BOOST_AUTO_TEST_CASE(can_be_moved)
+	{
 		{
-			arr.Append(ArrayItem());
-			BOOST_CHECK_EQUAL(arr.GetSize(), 1u);
-			BOOST_CHECK_EQUAL(arr.GetCapacity(), 1u);
-			arr.Append(ArrayItem());
-			BOOST_CHECK_EQUAL(arr.GetSize(), 2u);
-			BOOST_CHECK_EQUAL(arr.GetCapacity(), 2u);
-			arr.Append(ArrayItem());
-			BOOST_CHECK_EQUAL(arr.GetSize(), 3u);
-			BOOST_CHECK_EQUAL(arr.GetCapacity(), 4u);
-			arr.Append(ArrayItem());
-			BOOST_CHECK_EQUAL(arr.GetSize(), 4u);
-			BOOST_CHECK_EQUAL(arr.GetCapacity(), 4u);
+			stack.Push(35);
+			CMyStack<Items> stack1(std::move(stack));
+			BOOST_CHECK_EQUAL(stack1.GetTop().value, 35);
+			BOOST_CHECK(stack.IsEmpty());
 		}
 
-		BOOST_AUTO_TEST_CASE(it_becomes_available_at_the_back)
 		{
-			arr.Append(1);
-			BOOST_CHECK_EQUAL(arr.GetBack().value, 1);
-			arr.Append(2);
-			BOOST_CHECK_EQUAL(arr.GetBack().value, 2);
-			arr.Append(3);
-			BOOST_CHECK_EQUAL(arr.GetBack().value, 3);
-			arr.Append(4);
-			BOOST_CHECK_EQUAL(arr.GetBack().value, 4);
+			stack.Push(24);
+			CMyStack<Items> stack1;
+			stack1 = std::move(stack);
+			BOOST_CHECK_EQUAL(stack1.GetTop().value, 24);
+			BOOST_CHECK(stack.IsEmpty());
 		}
-	BOOST_AUTO_TEST_SUITE_END()
-
-	BOOST_AUTO_TEST_SUITE(after_copy_construction)
-		BOOST_AUTO_TEST_CASE(has_size_capacity_equal_to_size_of_original_array)
-		{
-			for (auto i = 0; i < 6; ++i)
-			{
-				arr.Append(i);
-			}
-			BOOST_CHECK_NE(arr.GetSize(), arr.GetCapacity());
-
-			auto copy(arr);
-			BOOST_CHECK_EQUAL(copy.GetSize(), arr.GetSize());
-			BOOST_CHECK_EQUAL(copy.GetCapacity(), arr.GetSize());
-		}
-	BOOST_AUTO_TEST_SUITE_END()
+	}*/
 BOOST_AUTO_TEST_SUITE_END()
