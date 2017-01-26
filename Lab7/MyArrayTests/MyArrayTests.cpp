@@ -28,7 +28,7 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStack)
 		BOOST_CHECK_EQUAL(stack.GetSize(), 1);
 	}
 
-	/*BOOST_AUTO_TEST_CASE(can_pop_items)
+	BOOST_AUTO_TEST_CASE(can_pop_items)
 	{
 		stack.Push(Items());
 		stack.Pop();
@@ -97,5 +97,5 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStack)
 			BOOST_CHECK_EQUAL(stack1.GetTop().value, 24);
 			BOOST_CHECK(stack.IsEmpty());
 		}
-	}*/
+	}
 BOOST_AUTO_TEST_SUITE_END()

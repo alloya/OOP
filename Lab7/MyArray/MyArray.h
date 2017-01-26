@@ -1,17 +1,15 @@
-#pragma once
-
 template <typename T>
 class CMyStack
 {
 public:
 	CMyStack() = default;
 
-	CMyStack(CMyStack<T> const &stack)
+	CMyStack(CMyStack<T> & stack)
 	{
 		*this = stack;
 	}
 
-	CMyStack(CMyStack<T> &&stack)
+	CMyStack(CMyStack<T> && stack)
 	{
 		*this = std::move(stack);
 	}
@@ -21,19 +19,9 @@ public:
 		Clear();
 	}
 
-	bool IsEmpty()
+	bool IsEmpty() const
 	{
-		return (m_size == 0);
-	}
-
-	void Pop()
-	{
-		if (IsEmpty())
-		{
-			throw std::underflow_error("Stack is empty.");
-		}
-		m_last = m_last->next;
-		--m_size;
+		return m_size == 0;
 	}
 
 	void Clear()
@@ -44,28 +32,30 @@ public:
 		}
 	}
 
-	void Push(const T &element)
+	void Push(const T & data)
 	{
-		auto newElement = std::make_shared<Node>();
-
-		newElement->data = element;
-
-		if (m_last != nullptr)
-		{
-			newElement->next = m_last;
-		}
-
-		m_last = newElement;
-
+		m_last = std::make_shared<Node>(data, m_last);
 		++m_size;
 	}
 
-	T GetTop()const
+	void Pop()
 	{
 		if (IsEmpty())
 		{
 			throw std::underflow_error("Stack is empty.");
 		}
+
+		m_last = m_last->next;
+		--m_size;
+	}
+
+	T GetTop() const
+	{
+		if (IsEmpty())
+		{
+			throw std::underflow_error("Stack is empty.");
+		}
+
 		return m_last->data;
 	}
 
@@ -110,19 +100,19 @@ public:
 
 		return *this;
 	}
-
 private:
 	struct Node
 	{
 		Node(const T &data, const std::shared_ptr<Node> &next = nullptr)
-			:data(data)
-			,next(next)
+			: data(data)
+			, next(next)
 		{
 		}
+
 		T data;
 		std::shared_ptr<Node> next = nullptr;
 	};
 
-	size_t m_size = 0;
 	std::shared_ptr<Node> m_last = nullptr;
+	size_t m_size = 0;
 };
