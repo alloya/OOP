@@ -71,13 +71,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Lushinskaya\boost_1_61_0\boost_1_61_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Lushinskaya\boost_1_61_0\boost_1_61_0\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Lushinskaya\boost_1_61_0\boost_1_61_0;C:\Program Files %28x86%29\Microsoft Visual Studio 14.0\boost_1_61_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Lushinskaya\boost_1_61_0\boost_1_61_0\libs;C:\Program Files %28x86%29\Microsoft Visual Studio 14.0\boost_1_61_0\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\Lushinskaya\boost_1_61_0\boost_1_61_0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Lushinskaya\boost_1_61_0\boost_1_61_0\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\Lushinskaya\boost_1_61_0\boost_1_61_0;C:\Program Files %28x86%29\Microsoft Visual Studio 14.0\boost_1_61_0;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Lushinskaya\boost_1_61_0\boost_1_61_0\libs;C:\Program Files %28x86%29\Microsoft Visual Studio 14.0\boost_1_61_0\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

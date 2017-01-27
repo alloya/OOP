@@ -6,7 +6,8 @@ using namespace std;
 struct Items
 {
 	Items(int value = 0) : value(value)
-	{}
+	{
+	}
 	int value;
 };
 
@@ -67,17 +68,15 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStack)
 		{
 			stack.Push(35);
 			CMyStack<Items> stack1(stack);
+			BOOST_CHECK_EQUAL(stack.GetTop().value, 35);
 			BOOST_CHECK_EQUAL(stack1.GetTop().value, 35);
-			BOOST_CHECK_EQUAL(stack1.GetTop().value, 35);
-			BOOST_CHECK(!stack.IsEmpty());
 		}
 
 		{
 			stack.Push(24);
 			CMyStack<Items> stack1(stack);
+			BOOST_CHECK_EQUAL(stack.GetTop().value, 24);
 			BOOST_CHECK_EQUAL(stack1.GetTop().value, 24);
-			BOOST_CHECK_EQUAL(stack1.GetTop().value, 24);
-			BOOST_CHECK(!stack.IsEmpty());
 		}
 	}
 
@@ -96,6 +95,27 @@ BOOST_FIXTURE_TEST_SUITE(MyArray, EmptyStack)
 			stack1 = std::move(stack);
 			BOOST_CHECK_EQUAL(stack1.GetTop().value, 24);
 			BOOST_CHECK(stack.IsEmpty());
+		}
+	}
+
+	BOOST_AUTO_TEST_CASE(can_be_assigned)
+	{
+		{
+			stack.Push(35);
+			CMyStack<Items> stack1;
+			stack1 = stack;
+			BOOST_CHECK_EQUAL(stack.GetTop().value, 35);
+			BOOST_CHECK_EQUAL(stack1.GetTop().value, 35);
+		}
+	}
+
+	BOOST_AUTO_TEST_CASE(can_be_assigned_to_itself)
+	{
+		{
+			stack.Push(35);
+			stack = stack;
+			BOOST_CHECK_EQUAL(stack.GetSize(), 1);
+			BOOST_CHECK_EQUAL(stack.GetTop().value, 35);
 		}
 	}
 BOOST_AUTO_TEST_SUITE_END()
