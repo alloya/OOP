@@ -4,14 +4,36 @@ class CMyStack
 public:
 	CMyStack() = default;
 
-	CMyStack(CMyStack<T> & stack)
+	CMyStack(const CMyStack<T> & stack)
 	{
-		*this = stack;
+		if (std::addressof(stack) != this)
+		{
+			std::shared_ptr<Node> tmp = stack.m_last;
+			std::shared_ptr<Node> currentElement = std::make_shared<Node>(tmp->data);
+			m_last = currentElement;
+
+			tmp = tmp->next;
+			while (tmp != nullptr)
+			{
+				currentElement->next = std::make_shared<Node>(tmp->data);
+				currentElement = currentElement->next;
+
+				tmp = tmp->next;
+
+			}
+			m_size = stack.m_size;
+		}
 	}
 
 	CMyStack(CMyStack<T> && stack)
 	{
-		*this = std::move(stack);
+		if (std::addressof(stack) != this)
+		{
+			m_last = stack.m_last;
+			m_size = stack.m_size;
+			stack.m_last = nullptr;
+			stack.m_size = 0;
+		}
 	}
 
 	~CMyStack()
@@ -64,13 +86,14 @@ public:
 		return m_size;
 	}
 
-	CMyStack & operator=(CMyStack<T> &stack)
+	CMyStack & operator=(const CMyStack<T> &stack)
 	{
 		if (std::addressof(stack) != this)
 		{
+			Clear();
 			auto tmp = stack.m_last;
 			auto currentElement = std::make_shared<Node>(tmp->data);
-
+			
 			m_last = currentElement;
 			tmp = tmp->next;
 
@@ -92,6 +115,7 @@ public:
 	{
 		if (std::addressof(stack) != this)
 		{
+			Clear();
 			m_last = stack.m_last;
 			m_size = stack.m_size;
 			stack.m_last = nullptr;
