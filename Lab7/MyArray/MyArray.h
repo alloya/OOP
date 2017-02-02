@@ -90,24 +90,9 @@ public:
 	{
 		if (std::addressof(stack) != this)
 		{
-			Clear();
-			auto tmp = stack.m_last;
-			auto currentElement = std::make_shared<Node>(tmp->data);
-			
-			m_last = currentElement;
-			tmp = tmp->next;
-
-			while (tmp != nullptr)
-			{
-				currentElement->next = std::make_shared<Node>(tmp->data);
-				currentElement = currentElement->next;
-
-				tmp = tmp->next;
-			}
-
-			m_size = stack.m_size;
+			CMyStack<T> tempStack(stack);
+			std::swap(*this, tempStack);
 		}
-
 		return *this;
 	}
 
